@@ -10,6 +10,15 @@
   <string name="identCard">Cédula</string>
   <string name="confirmPassword">Confirmar contraseña</string>
   <string name="createAccount">Crear cuenta</string>
+  <string name="job">Puesto</string>
+  <string name="department">Departamento</string>
+  <string name="expectedSalary">Salario esperado</string>
+  <string name="next">Siguiente</string>
+  <string name="none">Ninguno...</string>
+  <string name="competitions">Competencias</string>
+  <string name="trainings">Capacitaciones</string>
+  
+  <!--Errors-->
   <string name="usernameCannotBeEmpty">El nombre de usuario no puede estar vacío</string>
   <string name="identCardCannotBeEmpty">La cédula no puede estar vacía</string>
   <string name="passwordCannotBeEmpty">La contraseña no puede estar vacía</string>
@@ -23,9 +32,8 @@
   <string name="emptyFieldError">El campo no puede estar vacío</string>
   <string name="spinnerSelectItemError">Debe seleccionar una opción</string>
   <string name="errorMessage">Un error ha ocurrido, intente de nuevo</string>
-  <string name="job">Puesto</string>
-  <string name="department">Departamento</string>
-  <string name="expectedSalary">Salario esperado</string>
-  <string name="next">Siguiente</string>
-  <string name="none">Ninguno...</string>
+  
+  <!--Dates-->
+  <string name="moths">Meses</string>
+  <string name="years">Años</string>
 </resources>

@@ -30,8 +30,6 @@ namespace SistemaRH.Activities
         private List<Department> departments;
         private ArrayAdapter<string> jobsAdapter;
         private ArrayAdapter<string> departmentsAdapter;
-        private string selectedJob;
-        private string selectedDepartment;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {

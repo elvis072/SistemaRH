@@ -3,5 +3,6 @@
   <PropertyGroup>
     <SelectedDevice>LGE LGLS775</SelectedDevice>
     <ProjectView>ProjectFiles</ProjectView>
+    <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
   </PropertyGroup>
 </Project>

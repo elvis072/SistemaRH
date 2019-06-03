@@ -319,5 +319,17 @@ namespace SistemaRH.Utilities
             }
             return valid;
         }
+
+        public string ConvertToDate(DateTime from, DateTime to)
+        {
+            string result = string.Empty;
+            var diff = to - from;
+            double totalDays = diff.TotalDays;
+            if (totalDays > 30 && totalDays < (30 * 12))            
+                result = (totalDays / 30) + GetString(Resource.String.moths);  
+            else if (totalDays > (30 * 12))
+                result = (totalDays / 30 / 12) + GetString(Resource.String.years);
+            return result;
+        }
     }
 }

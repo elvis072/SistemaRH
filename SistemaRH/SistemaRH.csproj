@@ -139,9 +139,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\CandidateJob.cs" />
+    <Compile Include="Activities\CandidateSkills.cs" />
     <Compile Include="Activities\Main.cs" />
     <Compile Include="Activities\Login.cs" />
     <Compile Include="Activities\SignUp.cs" />
+    <Compile Include="Adapters\MultiCheckBoxAdapter.cs" />
     <Compile Include="Enumerators\GlobalEnums.cs" />
     <Compile Include="Objects\Candidate.cs" />
     <Compile Include="Objects\Competition.cs" />
@@ -203,6 +205,16 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Integers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\CandidateSkills.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\MultiCheckBoxItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.28.0.0.1\build\monoandroid70\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.28.0.0.1\build\monoandroid70\Xamarin.Android.Support.Vector.Drawable.targets')" />
