@@ -27,8 +27,8 @@ namespace SistemaRH.Utilities
             {
                 if (myLib == null)
                     myLib = new MyLib();
-                return myLib;               
-            }           
+                return myLib;
+            }
         }
 
         public string GetString(int resId)
@@ -50,7 +50,7 @@ namespace SistemaRH.Utilities
             {
                 if (textInputLayout.ErrorEnabled)
                     textInputLayout.ErrorEnabled = false;
-            };                    
+            };
         }
 
         public string GetDBPath()
@@ -63,7 +63,7 @@ namespace SistemaRH.Utilities
         public async Task<bool> TableExistAsync<T>() where T : new()
         {
             try
-            {             
+            {
                 var connection = new SQLiteAsyncConnection(GetDBPath());
                 int count = await connection.Table<T>().CountAsync();
                 connection.CloseAsync().GetAwaiter();
@@ -75,20 +75,20 @@ namespace SistemaRH.Utilities
             }
         }
 
-        public async Task<bool> InsertObjectAsync<T>(T obj) where T: new()
+        public async Task<bool> InsertObjectAsync<T>(T obj) where T : new()
         {
             bool isSucessfull = false;
             try
-            {                
+            {
                 var connection = new SQLiteAsyncConnection(GetDBPath());
                 if (!await TableExistAsync<T>())
                     await connection.CreateTableAsync<T>();
                 int result = await connection.InsertAsync(obj);
                 isSucessfull = result > 0;
-                connection.CloseAsync().GetAwaiter();                
+                connection.CloseAsync().GetAwaiter();
             }
             catch (SQLiteException)
-            {             
+            {
             }
             return isSucessfull;
         }
@@ -115,13 +115,13 @@ namespace SistemaRH.Utilities
         {
             T result = default(T);
             try
-            {              
+            {
                 if (await TableExistAsync<T>())
                 {
                     var connection = new SQLiteAsyncConnection(GetDBPath());
                     result = await connection.FindAsync<T>(obj_id);
                     connection.CloseAsync().GetAwaiter();
-                }            
+                }
             }
             catch (SQLiteException)
             {
@@ -163,7 +163,7 @@ namespace SistemaRH.Utilities
                             pReturn += paramsToReturn[i] + ", ";
                         else
                             pReturn += paramsToReturn[i];
-                    }                   
+                    }
 
                     for (int i = 0; i < paramsToFind.Count; i++)
                     {
@@ -188,14 +188,14 @@ namespace SistemaRH.Utilities
         {
             bool isSucessfull = false;
             try
-            {               
+            {
                 if (await TableExistAsync<T>())
                 {
                     var connection = new SQLiteAsyncConnection(GetDBPath());
                     int result = await connection.UpdateAsync(obj);
                     isSucessfull = result > 0;
                     connection.CloseAsync().GetAwaiter();
-                }                  
+                }
             }
             catch (SQLiteException)
             {
@@ -207,10 +207,10 @@ namespace SistemaRH.Utilities
         {
             bool isSucessfull = false;
             try
-            {              
+            {
                 if (await TableExistAsync<T>())
                 {
-                    var connection = new SQLiteAsyncConnection(GetDBPath());         
+                    var connection = new SQLiteAsyncConnection(GetDBPath());
                     int result = await connection.DeleteAsync<T>(obj_id);
                     isSucessfull = result > 0;
                     connection.CloseAsync().GetAwaiter();
@@ -323,12 +323,16 @@ namespace SistemaRH.Utilities
         public string ConvertToDate(DateTime from, DateTime to)
         {
             string result = string.Empty;
+
+            if (from == null || to == null)
+                return result;
+
             var diff = to - from;
             double totalDays = diff.TotalDays;
-            if (totalDays > 30 && totalDays < (30 * 12))            
-                result = (totalDays / 30) + GetString(Resource.String.moths);  
+            if (totalDays > 30 && totalDays < (30 * 12))
+                result = (int)(totalDays / 30) + " " + GetString(Resource.String.moths);
             else if (totalDays > (30 * 12))
-                result = (totalDays / 30 / 12) + GetString(Resource.String.years);
+                result = (int)(totalDays / 30 / 12) + " " + GetString(Resource.String.years);
             return result;
         }
     }

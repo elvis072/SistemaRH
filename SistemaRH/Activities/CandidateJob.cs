@@ -90,12 +90,17 @@ namespace SistemaRH.Activities
                     if (Validations())
                     {
                         var user = await MyLib.Instance.FindObjectAsync<Candidate>(MyLib.Instance.GetUserId());
-                        user.ExpectedJob = jobs[spCandidateJobJob.SelectedItemPosition];
-                        user.Department = departments[spCandidateJobDepartment.SelectedItemPosition];
-                        user.ExpectedSalary = int.Parse(tietCandidateJobExpectedSalary.Text);
-                        bool isUpdated = await MyLib.Instance.UpdateObjectAsync(user);                       
-                        if (isUpdated)                        
-                            StartActivity(new Intent(this, typeof(CandidateJob)));  
+                        if (user != null)
+                        {
+                            user.ExpectedJob = jobs[spCandidateJobJob.SelectedItemPosition];
+                            user.Department = departments[spCandidateJobDepartment.SelectedItemPosition];
+                            user.ExpectedSalary = int.Parse(tietCandidateJobExpectedSalary.Text);
+                            bool isUpdated = await MyLib.Instance.UpdateObjectAsync(user);
+                            if (isUpdated)
+                                StartActivity(new Intent(this, typeof(CandidateJob)));
+                            else
+                                Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
+                        }
                         else
                             Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
                     }

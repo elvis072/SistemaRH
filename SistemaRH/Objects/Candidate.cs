@@ -24,7 +24,7 @@ namespace SistemaRH.Objects
         public IList<Training> Trainings { get; set; }
         [OneToMany]
         public IList<WorkExperience> WorkExperiences { get; set; }
-        public IList<string> Recommendations { get; set; }
+        public string RecommendatedBy { get; set; }
         public UsersRoles Role { get; set; } = UsersRoles.Candidate;
     }
 }

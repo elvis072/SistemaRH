@@ -138,6 +138,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\CandidateExperience.cs" />
     <Compile Include="Activities\CandidateJob.cs" />
     <Compile Include="Activities\CandidateSkills.cs" />
     <Compile Include="Activities\Main.cs" />
@@ -176,6 +177,7 @@
     <AndroidResource Include="Resources\layout\CandidateJob.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\CandidateExperience.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml">

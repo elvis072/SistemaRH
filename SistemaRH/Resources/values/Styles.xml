@@ -2,6 +2,7 @@
 <resources>
   <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="android:textColorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:buttonStyle">@style/ButtonStyle</item>
@@ -9,7 +10,8 @@
   </style>
   
   <style name="ButtonStyle" parent="Widget.AppCompat.Button">
-    <item name="android:textColor">@color/appBackground</item>
+    <item name="android:textColor">@color/colorPrimary</item>
+    <item name="android:background">@drawable/ButtonShape</item>
   </style>
 
   <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
@@ -29,5 +31,9 @@
 
   <style name="MyTextInputEditTextStyle" parent="Widget.AppCompat.EditText">
     <item name="android:singleLine">true</item>
+  </style>
+
+  <style name="MyDatePickerStyle" parent="Theme.AppCompat.Light.Dialog">
+    <item name="colorAccent">@color/colorAccent</item>
   </style>
 </resources>

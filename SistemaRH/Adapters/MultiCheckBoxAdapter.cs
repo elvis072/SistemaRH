@@ -38,17 +38,30 @@ namespace SistemaRH.Adapters
 
             if (holder != null && item != null)
             {
+                holder.SetItem(item);
                 holder.CbMultiCheckBoxItem.Text = item.Description;
             }
         }
 
-        private class MultiCheckBoxAdapterViewHolder : RecyclerView.ViewHolder
+        private class MultiCheckBoxAdapterViewHolder : RecyclerView.ViewHolder, CompoundButton.IOnCheckedChangeListener
         {
             public CheckBox CbMultiCheckBoxItem { get; set; }
+            private MultiCheckBoxItem item;            
 
             public MultiCheckBoxAdapterViewHolder(View itemView) : base(itemView)
             {
-                CbMultiCheckBoxItem = itemView.FindViewById<CheckBox>(Resource.Id.cbMultiCheckBoxItem);
+                CbMultiCheckBoxItem = itemView.FindViewById<CheckBox>(Resource.Id.cbMultiCheckBoxItem);                
+                CbMultiCheckBoxItem.SetOnCheckedChangeListener(this);
+            }
+
+            public void OnCheckedChanged(CompoundButton buttonView, bool isChecked)
+            {
+                item.IsChecked = isChecked;
+            }
+
+            public void SetItem(MultiCheckBoxItem item)
+            {
+                this.item = item;
             }
         }
     }
@@ -56,5 +69,6 @@ namespace SistemaRH.Adapters
     public class MultiCheckBoxItem
     {
         public string Description { get; set; }
+        public bool IsChecked { get; set; }
     }
 }

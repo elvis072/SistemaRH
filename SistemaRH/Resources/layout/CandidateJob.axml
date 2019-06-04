@@ -44,7 +44,6 @@
     android:id="@+id/btnCandidateJobNext"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/ButtonShape"
     android:text="@string/next"
     android:layout_gravity="center_horizontal"
     android:layout_marginTop="50dp"/>

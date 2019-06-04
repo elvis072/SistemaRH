@@ -165,5 +165,49 @@ namespace SistemaRH.Utilities
             };
             await MyLib.Instance.InsertObjectsAsync(competitions);
         }
+
+        public async Task CreateTrainings()
+        {
+            List<Training> trainings = new List<Training>()
+            {
+                new Training()
+                {
+                    Description = "Administracion de empresas",
+                    FromDate = new DateTime(1,1,1),
+                    ToDate = new DateTime(4,1,1),
+                    TrainingLevel = TrainingLevel.Postgraduate,
+                    Institution = "UNIBE"
+                },
+                new Training()
+                {
+                    Description = "Conocimientos de PHP",
+                    FromDate = new DateTime(1,1,1),
+                    ToDate = new DateTime(4,1,1),
+                    TrainingLevel = TrainingLevel.Technical
+                },
+                new Training()
+                {
+                    Description = "Conocimientos de Java",
+                    FromDate = new DateTime(1,1,1),
+                    ToDate = new DateTime(6,1,1),
+                    TrainingLevel = TrainingLevel.Grade
+                },                
+                new Training()
+                {
+                    Description = "Experiencia con HTML5 y CSS3",
+                    FromDate = new DateTime(1,1,1),
+                    ToDate = new DateTime(3,1,1),
+                    TrainingLevel = TrainingLevel.Technical
+                },
+                new Training()
+                {
+                    Description = "Experiencia con bases de datos relacionales (Postgres, MySQL, etc)",
+                    FromDate = new DateTime(1,1,1),
+                    ToDate = new DateTime(4,1,1),
+                    TrainingLevel = TrainingLevel.Grade
+                }
+            };
+            await MyLib.Instance.InsertObjectsAsync(trainings);
+        }
     }
 }

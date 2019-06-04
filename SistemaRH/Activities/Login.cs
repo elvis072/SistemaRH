@@ -30,11 +30,13 @@ namespace SistemaRH.Activities
 
             //await MyLib.Instance.DeleteAllObjectsAsync<Job>();
             //await MyLib.Instance.DeleteAllObjectsAsync<Department>();
-            await MyLib.Instance.DeleteAllObjectsAsync<Competition>();
+            //await MyLib.Instance.DeleteAllObjectsAsync<Competition>();
+            //await MyLib.Instance.DeleteAllObjectsAsync<Training>();
             //await SampleData.Instance.CreateJobs();
             //await SampleData.Instance.CreateDepartments();
-            await SampleData.Instance.CreateCompetitions();
-            StartActivity(new Intent(this, typeof(CandidateSkills)));
+            //await SampleData.Instance.CreateCompetitions();
+            //await SampleData.Instance.CreateTrainings();
+            StartActivity(new Intent(this, typeof(CandidateExperience)));
 
             //User is logged
             //if (MyLib.Instance.GetUserId() != 0)
@@ -109,10 +111,10 @@ namespace SistemaRH.Activities
                         StartActivity(new Intent(this, typeof(CandidateJob)));
                     //Competitions or trainings are not selected
                     else if (user.Competitions == null || user.Trainings == null)
-                        StartActivity(new Intent(this, typeof(CandidateJob)));
-                    //Work experiences or recommendations are not selected         
-                    else if (user.WorkExperiences == null || user.Recommendations == null)
-                        StartActivity(new Intent(this, typeof(CandidateJob)));
+                        StartActivity(new Intent(this, typeof(CandidateSkills)));
+                    //Work experiences is not filled         
+                    else if (user.WorkExperiences == null)
+                        StartActivity(new Intent(this, typeof(CandidateExperience)));
                     else //If all is filled, go to Home                        
                         MyLib.Instance.OpenMainActivity(this);
                 }
