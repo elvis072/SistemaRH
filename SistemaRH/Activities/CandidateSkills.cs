@@ -95,7 +95,7 @@ namespace SistemaRH.Activities
                     if (isCompetitionSelected && isTrainingSelected)
                     {
                         //Competitions
-                        IList<Competition> selectedCompetitions = new List<Competition>();              
+                        List<Competition> selectedCompetitions = new List<Competition>();              
                         foreach (var c in multiCheckBoxItemsCompetitions)
                         {
                             if (c.IsChecked)
@@ -107,7 +107,7 @@ namespace SistemaRH.Activities
                         }
 
                         //Trainigs
-                        IList<Training> selectedTrainings = new List<Training>();
+                        List<Training> selectedTrainings = new List<Training>();
                         foreach (var t in multiCheckBoxItemsTrainings)
                         {
                             if (t.IsChecked)
@@ -125,7 +125,10 @@ namespace SistemaRH.Activities
                             user.Trainings = selectedTrainings;
                             bool isUpdated = await MyLib.Instance.UpdateObjectAsync(user);
                             if (isUpdated)
+                            {
                                 StartActivity(new Intent(this, typeof(CandidateExperience)));
+                                Finish();
+                            }
                             else
                                 Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
                         }

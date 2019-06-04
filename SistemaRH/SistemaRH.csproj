@@ -146,6 +146,7 @@
     <Compile Include="Activities\SignUp.cs" />
     <Compile Include="Adapters\MultiCheckBoxAdapter.cs" />
     <Compile Include="Enumerators\GlobalEnums.cs" />
+    <Compile Include="Fragments\Home.cs" />
     <Compile Include="Objects\Candidate.cs" />
     <Compile Include="Objects\Competition.cs" />
     <Compile Include="Objects\Department.cs" />
@@ -215,6 +216,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\MultiCheckBoxItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Home.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

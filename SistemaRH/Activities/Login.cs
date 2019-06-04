@@ -36,7 +36,7 @@ namespace SistemaRH.Activities
             //await SampleData.Instance.CreateDepartments();
             //await SampleData.Instance.CreateCompetitions();
             //await SampleData.Instance.CreateTrainings();
-            StartActivity(new Intent(this, typeof(CandidateExperience)));
+            StartActivity(new Intent(this, typeof(Main)));
 
             //User is logged
             //if (MyLib.Instance.GetUserId() != 0)
@@ -117,6 +117,7 @@ namespace SistemaRH.Activities
                         StartActivity(new Intent(this, typeof(CandidateExperience)));
                     else //If all is filled, go to Home                        
                         MyLib.Instance.OpenMainActivity(this);
+                    this?.Finish();
                 }
                 else
                     MyLib.Instance.OpenMainActivity(this);

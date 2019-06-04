@@ -9,7 +9,7 @@
   <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="wrap_content"    
     android:padding="30dp">
     <TextView
       android:layout_width="match_parent"
@@ -28,6 +28,7 @@
         android:id="@+id/tietCandidateExperienceSalary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLength="@integer/expectedSalaryMaxlength"
         android:numeric="integer"
         android:theme="@style/MyTextInputEditTextStyle"/>
     </android.support.design.widget.TextInputLayout>
@@ -98,12 +99,29 @@
         android:layout_height="wrap_content"
         android:theme="@style/MyTextInputEditTextStyle"/>
     </android.support.design.widget.TextInputLayout>
-    <Button
-      android:id="@+id/btnCandidateExperienceNext"
+    <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="@string/next"
-      android:layout_gravity="center_horizontal"
-      android:layout_marginTop="50dp"/>
+      android:layout_marginTop="50dp"
+      android:orientation="horizontal"
+      android:weightSum="1.0">
+      <Button
+        android:id="@+id/btnCandidateExperienceAddWorkExperience"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/addWorkExperience"
+        android:layout_weight="0.7"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+      <Button
+        android:id="@+id/btnCandidateExperienceNext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/next"
+        android:layout_weight="0.3"/>
+    </LinearLayout>
   </LinearLayout>
 </ScrollView>

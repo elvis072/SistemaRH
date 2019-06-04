@@ -16,6 +16,7 @@ using SistemaRH.Utilities;
 using SistemaRH.Objects;
 using Android.Icu.Util;
 using Android.Graphics;
+using System.Threading.Tasks;
 
 namespace SistemaRH.Activities
 {
@@ -31,7 +32,8 @@ namespace SistemaRH.Activities
         private TextInputEditText tietCandidateExperienceFromDate;
         private TextInputEditText tietCandidateExperienceToDate;
         private TextInputEditText tietCandidateExperienceRecommendations;
-        private Button btnCandidateExperienceNext;     
+        private Button btnCandidateExperienceNext;
+        private Button btnCandidateExperienceAddWorkExperience;
         private DatePickerDialog toDatePicker;
         private DatePickerDialog fromDatePicker;
         private DateTime fromDate;
@@ -52,8 +54,10 @@ namespace SistemaRH.Activities
             tietCandidateExperienceToDate = FindViewById<TextInputEditText>(Resource.Id.tietCandidateExperienceToDate);
             tietCandidateExperienceRecommendations = FindViewById<TextInputEditText>(Resource.Id.tietCandidateExperienceRecommendations);
             btnCandidateExperienceNext = FindViewById<Button>(Resource.Id.btnCandidateExperienceNext);
+            btnCandidateExperienceAddWorkExperience = FindViewById<Button>(Resource.Id.btnCandidateExperienceAddWorkExperience);
 
             btnCandidateExperienceNext.SetOnClickListener(this);
+            btnCandidateExperienceAddWorkExperience.SetOnClickListener(this);
             tietCandidateExperienceFromDate.SetOnClickListener(this);
             tietCandidateExperienceToDate.SetOnClickListener(this);
 
@@ -77,23 +81,17 @@ namespace SistemaRH.Activities
                 case Resource.Id.tietCandidateExperienceToDate:
                     toDatePicker.Show();
                     break;
+                case Resource.Id.btnCandidateExperienceAddWorkExperience:
+                    SaveWorkExperience().GetAwaiter();
+                    break;
                 case Resource.Id.btnCandidateExperienceNext:
-                    tilCandidateExperienceSalary.ErrorEnabled = tilCandidateExperienceEnterprise.ErrorEnabled =
-                       tilCandidateExperienceFromDate.ErrorEnabled = tilCandidateExperienceToDate.ErrorEnabled = false;
-                    if (Validations())
+                    if (await SaveWorkExperience())
                     {
-                        var user = await MyLib.Instance.FindObjectAsync<Candidate>(MyLib.Instance.GetUserId());
-                        if (user != null)
-                        {                            
-                            bool isUpdated = await MyLib.Instance.UpdateObjectAsync(user);
-                            if (isUpdated)
-                                StartActivity(new Intent(this, typeof(CandidateExperience)));
-                            else
-                                Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
-                        }
-                        else
-                            Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
+                        StartActivity(new Intent(this, typeof(Main)));
+                        Finish();
                     }
+                    else
+                        Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
                     break;
             }       
         }
@@ -125,6 +123,54 @@ namespace SistemaRH.Activities
                 tilCandidateExperienceToDate.Error = MyLib.Instance.GetString(Resource.String.emptyFieldError);
             }
             return valid;
+        }
+
+        private async Task<bool> SaveWorkExperience()
+        {
+            bool isSucessfull = false;
+            if (Validations())
+            {
+                WorkExperience workExperience = new WorkExperience()
+                {
+                    Salary = int.Parse(tietCandidateExperienceSalary.Text),
+                    Enterprise = tietCandidateExperienceEnterprise.Text,
+                    FromDate = fromDate,
+                    ToDate = toDate
+                };
+
+                bool isInserted = await MyLib.Instance.InsertObjectAsync(workExperience);
+                if (isInserted)
+                {
+                    var user = await MyLib.Instance.FindObjectAsync<Candidate>(MyLib.Instance.GetUserId());
+                    if (user != null)
+                    {
+                        if (user.WorkExperiences == null)
+                            user.WorkExperiences = new List<WorkExperience>();
+                        user.WorkExperiences.Add(workExperience);
+                        bool isUpdated = await MyLib.Instance.UpdateObjectAsync(user);
+                        if (isUpdated)
+                        {   
+                            //Reset values
+                            tietCandidateExperienceSalary.Text = tietCandidateExperienceEnterprise.Text = tietCandidateExperienceFromDate.Text =
+                                tietCandidateExperienceToDate.Text = tietCandidateExperienceRecommendations.Text = string.Empty;
+                            Calendar calendar = Calendar.Instance;
+                            fromDatePicker.UpdateDate(calendar.Get(CalendarField.Year), calendar.Get(CalendarField.Month), calendar.Get(CalendarField.DayOfMonth));
+                            toDatePicker.UpdateDate(calendar.Get(CalendarField.Year), calendar.Get(CalendarField.Month), calendar.Get(CalendarField.DayOfMonth));
+
+                            //Show confirmation message
+                            Toast.MakeText(this, Resource.String.workExperienceAdded, ToastLength.Short).Show();
+                            isSucessfull = true;
+                        }
+                        else
+                            Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
+                    }
+                    else
+                        Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
+                }
+                else
+                    Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
+            }
+            return isSucessfull;
         }
 
         public void OnDateSet(DatePicker view, int year, int month, int dayOfMonth)

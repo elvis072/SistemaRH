@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using SQLite;
 using SistemaRH.Objects;
 using SistemaRH.Activities;
+using SQLiteNetExtensions.Extensions;
 
 namespace SistemaRH.Utilities
 {
@@ -75,19 +76,41 @@ namespace SistemaRH.Utilities
             }
         }
 
+        public async Task<bool> CreateTables(Type[] types)
+        {
+            bool isSucessfull = false;
+            try
+            {
+                await Task.Run(() =>
+                {
+                    var connection = new SQLiteConnection(GetDBPath());
+                    connection.CreateTables(types: types);
+                    connection.Close();
+                    isSucessfull = true;
+                });
+            }
+            catch (SQLiteException)
+            {
+            }
+            return isSucessfull;
+        }
+
         public async Task<bool> InsertObjectAsync<T>(T obj) where T : new()
         {
             bool isSucessfull = false;
             try
             {
-                var connection = new SQLiteAsyncConnection(GetDBPath());
-                if (!await TableExistAsync<T>())
-                    await connection.CreateTableAsync<T>();
-                int result = await connection.InsertAsync(obj);
-                isSucessfull = result > 0;
-                connection.CloseAsync().GetAwaiter();
+                await Task.Run(async () =>
+                {
+                    var connection = new SQLiteConnection(GetDBPath());
+                    if (!await TableExistAsync<T>())
+                        connection.CreateTable<T>();
+                    connection.InsertWithChildren(obj);
+                    connection.Close();
+                    isSucessfull = true;
+                });
             }
-            catch (SQLiteException)
+            catch (SQLiteException e)
             {
             }
             return isSucessfull;
@@ -98,12 +121,15 @@ namespace SistemaRH.Utilities
             bool isSucessfull = false;
             try
             {
-                var connection = new SQLiteAsyncConnection(GetDBPath());
-                if (!await TableExistAsync<T>())
-                    await connection.CreateTableAsync<T>();
-                int result = await connection.InsertAllAsync(objs);
-                isSucessfull = result > 0;
-                connection.CloseAsync().GetAwaiter();
+                await Task.Run(async () =>
+                {
+                    var connection = new SQLiteConnection(GetDBPath());
+                    if (!await TableExistAsync<T>())
+                        connection.CreateTable<T>();
+                    connection.InsertAllWithChildren(objs);           
+                    connection.Close();
+                    isSucessfull = true;
+                });
             }
             catch (SQLiteException)
             {
@@ -116,12 +142,15 @@ namespace SistemaRH.Utilities
             T result = default(T);
             try
             {
-                if (await TableExistAsync<T>())
+                await Task.Run(async () => 
                 {
-                    var connection = new SQLiteAsyncConnection(GetDBPath());
-                    result = await connection.FindAsync<T>(obj_id);
-                    connection.CloseAsync().GetAwaiter();
-                }
+                    if (await TableExistAsync<T>())
+                    {
+                        var connection = new SQLiteConnection(GetDBPath());
+                        result = connection.GetWithChildren<T>(obj_id);
+                        connection.Close();
+                    }
+                });
             }
             catch (SQLiteException)
             {
@@ -131,20 +160,24 @@ namespace SistemaRH.Utilities
 
         public async Task<List<T>> FindAllObjectsAsync<T>() where T : new()
         {
+            List<T> results = default(List<T>);
             try
             {
-                if (await TableExistAsync<T>())
+                await Task.Run(async () =>
                 {
-                    var connection = new SQLiteAsyncConnection(GetDBPath());
-                    var results = await connection.QueryAsync<T>("SELECT * FROM " + typeof(T).Name);
-                    return results;
-                }
+                    if (await TableExistAsync<T>())
+                    {
+                        var connection = new SQLiteConnection(GetDBPath());
+                        results = connection.GetAllWithChildren<T>();
+                        connection.Close();                        
+                    }
+                });
 
             }
             catch (SQLiteException)
             {
             }
-            return null;
+            return results;
         }
 
         public async Task<List<T>> FindObjectsWithCustomQueryAsync<T>(List<string> paramsToReturn, List<KeyValuePair<string, string>> paramsToFind) where T : new()
@@ -189,13 +222,16 @@ namespace SistemaRH.Utilities
             bool isSucessfull = false;
             try
             {
-                if (await TableExistAsync<T>())
+                await Task.Run(async () =>
                 {
-                    var connection = new SQLiteAsyncConnection(GetDBPath());
-                    int result = await connection.UpdateAsync(obj);
-                    isSucessfull = result > 0;
-                    connection.CloseAsync().GetAwaiter();
-                }
+                    if (await TableExistAsync<T>())
+                    {
+                        var connection = new SQLiteConnection(GetDBPath());
+                        connection.UpdateWithChildren(obj);
+                        connection.Close();
+                        isSucessfull = true;
+                    }
+                });
             }
             catch (SQLiteException)
             {

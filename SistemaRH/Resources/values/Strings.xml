@@ -23,6 +23,8 @@
   <string name="enterprise">Empresa</string>
   <string name="fromDate">Desde la fecha</string>
   <string name="toDate">Hasta la fecha</string>
+  <string name="addWorkExperience">Añadir experiencia de trabajo</string>
+  <string name="workExperienceAdded">Experiencia de trabajo añadida correctamente</string>
   
   <!--Errors-->
   <string name="usernameCannotBeEmpty">El nombre de usuario no puede estar vacío</string>

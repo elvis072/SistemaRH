@@ -61,24 +61,30 @@ namespace SistemaRH.Activities
             //Jobs
             List<string> jobsNames = new List<string>() { MyLib.Instance.GetString(Resource.String.none) };
             jobs = await MyLib.Instance.FindAllObjectsAsync<Job>();
-            foreach (var job in jobs)
+            if (jobs != null && jobs.Count > 0)
             {
-                if (job.State)
-                    jobsNames.Add(job.Name);
+                foreach (var job in jobs)
+                {
+                    if (job?.State ?? false)
+                        jobsNames.Add(job.Name);
+                }
+                jobsAdapter.AddAll(jobsNames);
+                jobsAdapter.NotifyDataSetChanged();
             }
-            jobsAdapter.AddAll(jobsNames);
-            jobsAdapter.NotifyDataSetChanged();
 
             //Departments
             List<string> departmnetsNames = new List<string>() { MyLib.Instance.GetString(Resource.String.none) };
             departments = await MyLib.Instance.FindAllObjectsAsync<Department>();
-            foreach (var department in departments)
+            if (departments != null && departments.Count > 0)
             {
-                if (department.State)
-                    departmnetsNames.Add(department.Description);
+                foreach (var department in departments)
+                {
+                    if (department.State)
+                        departmnetsNames.Add(department.Description);
+                }
+                departmentsAdapter.AddAll(departmnetsNames);
+                departmentsAdapter.NotifyDataSetChanged();
             }
-            departmentsAdapter.AddAll(departmnetsNames);
-            departmentsAdapter.NotifyDataSetChanged();
         }
 
         public async void OnClick(View v)
@@ -97,7 +103,10 @@ namespace SistemaRH.Activities
                             user.ExpectedSalary = int.Parse(tietCandidateJobExpectedSalary.Text);
                             bool isUpdated = await MyLib.Instance.UpdateObjectAsync(user);
                             if (isUpdated)
+                            {
                                 StartActivity(new Intent(this, typeof(CandidateJob)));
+                                Finish();
+                            }
                             else
                                 Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
                         }
@@ -116,8 +125,8 @@ namespace SistemaRH.Activities
                 valid = false;
                 tilCandidateJobExpectedSalary.Error = MyLib.Instance.GetString(Resource.String.emptyFieldError);
             }
-            if (spCandidateJobJob.SelectedItem.Equals(MyLib.Instance.GetString(Resource.String.none)) ||
-                spCandidateJobDepartment.SelectedItem.Equals(MyLib.Instance.GetString(Resource.String.none)))
+            if ((spCandidateJobJob.SelectedItem?.Equals(MyLib.Instance.GetString(Resource.String.none)) ?? false) ||
+                (spCandidateJobDepartment.SelectedItem?.Equals(MyLib.Instance.GetString(Resource.String.none)) ?? false))
             {               
                 valid = false;
                 Toast.MakeText(this, Resource.String.spinnerSelectItemError, ToastLength.Short).Show();

@@ -98,7 +98,7 @@ namespace SistemaRH.Activities
                 var result = await MyLib.Instance.FindObjectsWithCustomQueryAsync<Candidate>(
                     new List<string>() { "*" }, 
                     new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Username", tietSignUpUsername.Text) } );
-                if (result != null)
+                if (result != null && result.Count > 0)
                 {
                     valid = false;
                     tilSignUpUsername.Error = MyLib.Instance.GetString(Resource.String.usernameInUse);
@@ -118,11 +118,18 @@ namespace SistemaRH.Activities
                 Password = MyLib.Instance.EncryptText(tietSignUpPassword.Text)             
             };
 
-            bool isUserCreated = await MyLib.Instance.InsertObjectAsync(newUser);
-            if (isUserCreated)
+            bool areAllCandidateChildrenTablesCreated = await MyLib.Instance.CreateTables(new Type[] { typeof(Job), typeof(Department), typeof(Competition), typeof(Training), typeof(WorkExperience) });
+            if (areAllCandidateChildrenTablesCreated)
             {
-                MyLib.Instance.SaveUserId(newUser.Id);
-                StartActivity(new Intent(this, typeof(CandidateJob)));
+                bool isUserCreated = await MyLib.Instance.InsertObjectAsync(newUser);
+                if (isUserCreated)
+                {
+                    MyLib.Instance.SaveUserId(newUser.Id);
+                    StartActivity(new Intent(this, typeof(CandidateJob)));
+                    Finish();
+                }
+                else
+                    Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
             }
             else
                 Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();

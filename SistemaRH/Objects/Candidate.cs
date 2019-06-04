@@ -19,11 +19,11 @@ namespace SistemaRH.Objects
         [OneToOne]
         public Department Department { get; set; }
         [OneToMany]
-        public IList<Competition> Competitions { get; set; }
+        public List<Competition> Competitions { get; set; }
         [OneToMany]
-        public IList<Training> Trainings { get; set; }
+        public List<Training> Trainings { get; set; }
         [OneToMany]
-        public IList<WorkExperience> WorkExperiences { get; set; }
+        public List<WorkExperience> WorkExperiences { get; set; }
         public string RecommendatedBy { get; set; }
         public UsersRoles Role { get; set; } = UsersRoles.Candidate;
     }
