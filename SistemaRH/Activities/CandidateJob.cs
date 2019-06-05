@@ -107,6 +107,7 @@ namespace SistemaRH.Activities
                                 user.ExpectedJob = jobs[spCandidateJobJob.SelectedItemPosition - 1];
                                 user.Department = departments[spCandidateJobDepartment.SelectedItemPosition - 1];
                                 user.ExpectedSalary = int.Parse(tietCandidateJobExpectedSalary.Text);
+                                var res = await MyLib.Instance.FindObjectAsync<Candidate>(user.Id);
                                 bool isUpdated = await MyLib.Instance.UpdateObjectAsync(user);
                                 if (isUpdated)
                                 {

@@ -22,7 +22,7 @@ using SistemaRH.Controls;
 
 namespace SistemaRH.Activities
 {
-    [Activity(Label = "Home", Theme = "@style/AppTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "Main", Theme = "@style/AppTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
     public class Main : AppCompatActivity, AdapterView.IOnItemClickListener
     {
         private SupportToolbar toolbar;
@@ -32,6 +32,7 @@ namespace SistemaRH.Activities
         private ArrayAdapter<string> lvMainAdapter;
         private SupportFragment mCurrentFragment;
         private Stack<SupportFragment> mStackFragments;
+        private Stack<string> mStackTitles;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -44,26 +45,30 @@ namespace SistemaRH.Activities
             SetSupportActionBar(toolbar);
 
             mStackFragments = new Stack<SupportFragment>();
+            mStackTitles = new Stack<string>();
+
             var items = Application.Context.Resources.GetStringArray(Resource.Array.adminOptions);
             lvMainAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, items);
             lvMain.Adapter = lvMainAdapter;
             lvMain.OnItemClickListener = this;
-            lvMain.Tag = 0;
+            lvMain.BringToFront();
+            lvMain.RequestLayout();
 
-            drawerToggle = new MyActionBarDrawerToggle(this, dlMain, 0, 0) { DrawerIndicatorEnabled = true };
+            drawerToggle = new ActionBarDrawerToggle(this, dlMain, 0, 0) { DrawerIndicatorEnabled = true };
             dlMain.RemoveDrawerListener(drawerToggle);
             dlMain.AddDrawerListener(drawerToggle);
+            dlMain.FocusableInTouchMode = false;
             SupportActionBar.SetHomeButtonEnabled(true);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowTitleEnabled(true);
             drawerToggle.SyncState();
 
-            ShowFragment(new Home());
+            ShowFragment(new Home(), "Home");
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            switch(item.ItemId)
+            switch (item.ItemId)
             {
                 case Android.Resource.Id.Home:
                     dlMain.CloseDrawer(lvMain);
@@ -83,7 +88,7 @@ namespace SistemaRH.Activities
             return true;
         }
 
-        private void ShowFragment(SupportFragment fragment)
+        private void ShowFragment(SupportFragment fragment, string title)
         {
             if (fragment == null || fragment.IsVisible)
                 return;
@@ -97,14 +102,22 @@ namespace SistemaRH.Activities
             trans.Add(Resource.Id.flMainContainer, fragment, fragment.GetType().Name);       
             trans.Commit();        
             mCurrentFragment = fragment;
+            mStackTitles.Push(title);
+            SupportActionBar.Title = title;
         }
 
         public override void OnBackPressed()
         {
-            if (SupportFragmentManager.BackStackEntryCount > 0)
+            if (mStackFragments.Count > 0)
             {
-                SupportFragmentManager.PopBackStack();
-                mCurrentFragment = mStackFragments.Pop();
+                var trans = SupportFragmentManager.BeginTransaction();
+                var fragment = mStackFragments.Pop();
+                var title = mStackTitles.Pop();
+                trans.Hide(mCurrentFragment);
+                trans.Show(fragment);
+                trans.Commit();
+                mCurrentFragment = fragment;
+                SupportActionBar.Title = title;
             }
             else
                 base.OnBackPressed();
@@ -117,21 +130,23 @@ namespace SistemaRH.Activities
                 case (int)AdminOptions.CompetenctiesManagement:
                     CompetenctiesManagement competenctiesManagement = new CompetenctiesManagement();
                     competenctiesManagement.ManagementSwipeActions = ManagementSwipeActions.Delete;
-                    ShowFragment(competenctiesManagement);
+                    ShowFragment(competenctiesManagement, MyLib.Instance.GetString(Resource.String.competitions));
                     break;
                 case (int)AdminOptions.LanguagesManagement:
                     break;
                 case (int)AdminOptions.TrainingManagement:
                     TrainingManagement trainingManagement = new TrainingManagement();
                     trainingManagement.ManagementSwipeActions = ManagementSwipeActions.Delete;
-                    ShowFragment(trainingManagement);
+                    ShowFragment(trainingManagement, MyLib.Instance.GetString(Resource.String.trainings));
                     break;
                 case (int)AdminOptions.JobsManagement:
                     JobsManagement jobsManagement = new JobsManagement();
                     jobsManagement.ManagementSwipeActions = ManagementSwipeActions.Delete;
-                    ShowFragment(jobsManagement);
+                    ShowFragment(jobsManagement, MyLib.Instance.GetString(Resource.String.jobs));
                     break;
             }
+            if (dlMain.IsDrawerOpen(lvMain))
+                dlMain.CloseDrawer(lvMain);
         }
 
         protected override void OnPostCreate(Bundle savedInstanceState)

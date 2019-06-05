@@ -14,9 +14,9 @@ using Android.Support.V7.App;
 using Android.Support.Design.Widget;
 using SistemaRH.Utilities;
 using SistemaRH.Objects;
-using Android.Icu.Util;
 using Android.Graphics;
 using System.Threading.Tasks;
+using Java.Util;
 
 namespace SistemaRH.Activities
 {

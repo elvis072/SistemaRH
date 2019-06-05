@@ -11,6 +11,7 @@
   <string name="confirmPassword">Confirmar contraseña</string>
   <string name="createAccount">Crear cuenta</string>
   <string name="job">Puesto</string>
+  <string name="jobs">Puestos</string>
   <string name="department">Departamento</string>
   <string name="expectedSalary">Salario esperado</string>
   <string name="next">Siguiente</string>

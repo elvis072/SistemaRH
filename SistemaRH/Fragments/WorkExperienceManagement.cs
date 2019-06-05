@@ -35,6 +35,7 @@ namespace SistemaRH.Fragments
                 {
                     items.Add(new ManagementItem()
                     {
+                        Id = we.Id,
                         //Title = $"{we?.Name} ({we?.Username})",
                         Description = $"{MyLib.Instance.GetString(Resource.String.salary)}: {we?.Salary}\n" +
                                       $"{MyLib.Instance.GetString(Resource.String.enterprise)}: {we?.Enterprise}\n" +

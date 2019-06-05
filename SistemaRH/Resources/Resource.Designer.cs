@@ -3009,8 +3009,8 @@ namespace SistemaRH
 			// aapt resource value: 0x7f070012
 			public const int abc_toolbar_collapse_description = 2131165202;
 			
-			// aapt resource value: 0x7f07003b
-			public const int addWorkExperience = 2131165243;
+			// aapt resource value: 0x7f07003c
+			public const int addWorkExperience = 2131165244;
 			
 			// aapt resource value: 0x7f070024
 			public const int app_name = 2131165220;
@@ -3021,17 +3021,17 @@ namespace SistemaRH
 			// aapt resource value: 0x7f070022
 			public const int bottom_sheet_behavior = 2131165218;
 			
-			// aapt resource value: 0x7f07003e
-			public const int candidateAccepted = 2131165246;
+			// aapt resource value: 0x7f07003f
+			public const int candidateAccepted = 2131165247;
 			
-			// aapt resource value: 0x7f07003d
-			public const int candidates = 2131165245;
+			// aapt resource value: 0x7f07003e
+			public const int candidates = 2131165246;
 			
 			// aapt resource value: 0x7f070023
 			public const int character_counter_pattern = 2131165219;
 			
-			// aapt resource value: 0x7f070033
-			public const int competitions = 2131165235;
+			// aapt resource value: 0x7f070034
+			public const int competitions = 2131165236;
 			
 			// aapt resource value: 0x7f07002c
 			public const int confirmPassword = 2131165228;
@@ -3042,137 +3042,140 @@ namespace SistemaRH
 			// aapt resource value: 0x7f070028
 			public const int createAccountMessage = 2131165224;
 			
-			// aapt resource value: 0x7f07002f
-			public const int department = 2131165231;
-			
-			// aapt resource value: 0x7f07004d
-			public const int differentPasswordError = 2131165261;
-			
-			// aapt resource value: 0x7f070050
-			public const int emptyFieldError = 2131165264;
-			
-			// aapt resource value: 0x7f070038
-			public const int enterprise = 2131165240;
-			
-			// aapt resource value: 0x7f070052
-			public const int errorMessage = 2131165266;
-			
 			// aapt resource value: 0x7f070030
-			public const int expectedSalary = 2131165232;
+			public const int department = 2131165232;
+			
+			// aapt resource value: 0x7f07004e
+			public const int differentPasswordError = 2131165262;
+			
+			// aapt resource value: 0x7f070051
+			public const int emptyFieldError = 2131165265;
 			
 			// aapt resource value: 0x7f070039
-			public const int fromDate = 2131165241;
+			public const int enterprise = 2131165241;
+			
+			// aapt resource value: 0x7f070053
+			public const int errorMessage = 2131165267;
+			
+			// aapt resource value: 0x7f070031
+			public const int expectedSalary = 2131165233;
+			
+			// aapt resource value: 0x7f07003a
+			public const int fromDate = 2131165242;
 			
 			// aapt resource value: 0x7f07002b
 			public const int identCard = 2131165227;
 			
-			// aapt resource value: 0x7f070047
-			public const int identCardCannotBeEmpty = 2131165255;
+			// aapt resource value: 0x7f070048
+			public const int identCardCannotBeEmpty = 2131165256;
 			
-			// aapt resource value: 0x7f070042
-			public const int institution = 2131165250;
+			// aapt resource value: 0x7f070043
+			public const int institution = 2131165251;
 			
-			// aapt resource value: 0x7f07004a
-			public const int invalidIdentCard = 2131165258;
+			// aapt resource value: 0x7f07004b
+			public const int invalidIdentCard = 2131165259;
 			
-			// aapt resource value: 0x7f07004f
-			public const int invalidUsernameOrPassword = 2131165263;
+			// aapt resource value: 0x7f070050
+			public const int invalidUsernameOrPassword = 2131165264;
 			
 			// aapt resource value: 0x7f07002e
 			public const int job = 2131165230;
 			
+			// aapt resource value: 0x7f07002f
+			public const int jobs = 2131165231;
+			
 			// aapt resource value: 0x7f070027
 			public const int login = 2131165223;
 			
-			// aapt resource value: 0x7f070045
-			public const int maxSalary = 2131165253;
-			
-			// aapt resource value: 0x7f070053
-			public const int minOneOptionMessageError = 2131165267;
-			
-			// aapt resource value: 0x7f070044
-			public const int minSalary = 2131165252;
+			// aapt resource value: 0x7f070046
+			public const int maxSalary = 2131165254;
 			
 			// aapt resource value: 0x7f070054
-			public const int moths = 2131165268;
+			public const int minOneOptionMessageError = 2131165268;
+			
+			// aapt resource value: 0x7f070045
+			public const int minSalary = 2131165253;
+			
+			// aapt resource value: 0x7f070055
+			public const int moths = 2131165269;
 			
 			// aapt resource value: 0x7f07002a
 			public const int name = 2131165226;
 			
-			// aapt resource value: 0x7f070031
-			public const int next = 2131165233;
-			
 			// aapt resource value: 0x7f070032
-			public const int none = 2131165234;
+			public const int next = 2131165234;
 			
-			// aapt resource value: 0x7f07003f
-			public const int notContent = 2131165247;
+			// aapt resource value: 0x7f070033
+			public const int none = 2131165235;
+			
+			// aapt resource value: 0x7f070040
+			public const int notContent = 2131165248;
 			
 			// aapt resource value: 0x7f070026
 			public const int password = 2131165222;
 			
-			// aapt resource value: 0x7f070048
-			public const int passwordCannotBeEmpty = 2131165256;
+			// aapt resource value: 0x7f070049
+			public const int passwordCannotBeEmpty = 2131165257;
+			
+			// aapt resource value: 0x7f07004d
+			public const int passwordDistintCharacters = 2131165261;
 			
 			// aapt resource value: 0x7f07004c
-			public const int passwordDistintCharacters = 2131165260;
-			
-			// aapt resource value: 0x7f07004b
-			public const int passwordMinLenght = 2131165259;
-			
-			// aapt resource value: 0x7f070036
-			public const int recommendatedFor = 2131165238;
-			
-			// aapt resource value: 0x7f070043
-			public const int riskLevel = 2131165251;
+			public const int passwordMinLenght = 2131165260;
 			
 			// aapt resource value: 0x7f070037
-			public const int salary = 2131165239;
+			public const int recommendatedFor = 2131165239;
+			
+			// aapt resource value: 0x7f070044
+			public const int riskLevel = 2131165252;
+			
+			// aapt resource value: 0x7f070038
+			public const int salary = 2131165240;
 			
 			// aapt resource value: 0x7f070013
 			public const int search_menu_title = 2131165203;
 			
-			// aapt resource value: 0x7f070040
-			public const int signOut = 2131165248;
+			// aapt resource value: 0x7f070041
+			public const int signOut = 2131165249;
 			
 			// aapt resource value: 0x7f070029
 			public const int signUp = 2131165225;
 			
-			// aapt resource value: 0x7f070051
-			public const int spinnerSelectItemError = 2131165265;
+			// aapt resource value: 0x7f070052
+			public const int spinnerSelectItemError = 2131165266;
 			
 			// aapt resource value: 0x7f070014
 			public const int status_bar_notification_info_overflow = 2131165204;
 			
-			// aapt resource value: 0x7f07003a
-			public const int toDate = 2131165242;
+			// aapt resource value: 0x7f07003b
+			public const int toDate = 2131165243;
 			
-			// aapt resource value: 0x7f070041
-			public const int trainingLevel = 2131165249;
+			// aapt resource value: 0x7f070042
+			public const int trainingLevel = 2131165250;
 			
-			// aapt resource value: 0x7f070034
-			public const int trainings = 2131165236;
+			// aapt resource value: 0x7f070035
+			public const int trainings = 2131165237;
 			
 			// aapt resource value: 0x7f070025
 			public const int username = 2131165221;
 			
-			// aapt resource value: 0x7f070046
-			public const int usernameCannotBeEmpty = 2131165254;
+			// aapt resource value: 0x7f070047
+			public const int usernameCannotBeEmpty = 2131165255;
 			
-			// aapt resource value: 0x7f07004e
-			public const int usernameInUse = 2131165262;
+			// aapt resource value: 0x7f07004f
+			public const int usernameInUse = 2131165263;
 			
-			// aapt resource value: 0x7f070049
-			public const int usernameMinLenght = 2131165257;
+			// aapt resource value: 0x7f07004a
+			public const int usernameMinLenght = 2131165258;
 			
-			// aapt resource value: 0x7f070035
-			public const int workExperience = 2131165237;
+			// aapt resource value: 0x7f070036
+			public const int workExperience = 2131165238;
 			
-			// aapt resource value: 0x7f07003c
-			public const int workExperienceAdded = 2131165244;
+			// aapt resource value: 0x7f07003d
+			public const int workExperienceAdded = 2131165245;
 			
-			// aapt resource value: 0x7f070055
-			public const int years = 2131165269;
+			// aapt resource value: 0x7f070056
+			public const int years = 2131165270;
 			
 			static String()
 			{

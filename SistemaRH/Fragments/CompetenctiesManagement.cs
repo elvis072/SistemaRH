@@ -48,7 +48,7 @@ namespace SistemaRH.Fragments
                     items.Add(new ManagementItem()
                     {
                         Id = c.Id,
-                        Description = c?.Description
+                        Title = c?.Description
                     });
                 }
             }
