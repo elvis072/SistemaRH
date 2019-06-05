@@ -14,6 +14,7 @@ using Android.Support.V4.App;
 using Android.Support.Design.Widget;
 using SistemaRH.Adapters;
 using SistemaRH.Utilities;
+using static SistemaRH.Enumerators.GlobalEnums;
 
 namespace SistemaRH.Fragments
 {
@@ -38,11 +39,13 @@ namespace SistemaRH.Fragments
             Bundle candidateManagementArgs = new Bundle();
             candidateManagementArgs.PutString("fragment_title", MyLib.Instance.GetString(Resource.String.candidates));
             CandidateManagement candidateManagement = new CandidateManagement();
+            candidateManagement.ManagementSwipeActions = ManagementSwipeActions.DeleteAndAdd;
             candidateManagement.Arguments = candidateManagementArgs;
 
             Bundle workExperienceManagementArgs = new Bundle();
             workExperienceManagementArgs.PutString("fragment_title", MyLib.Instance.GetString(Resource.String.workExperience));
             WorkExperienceManagement workExperienceManagement = new WorkExperienceManagement();
+            workExperienceManagement.ManagementSwipeActions = ManagementSwipeActions.Delete;
             workExperienceManagement.Arguments = workExperienceManagementArgs;
 
             List<Fragment> fragments = new List<Fragment>()

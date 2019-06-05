@@ -155,10 +155,15 @@
     <Compile Include="Adapters\ManagementAdapter.cs" />
     <Compile Include="Adapters\MultiCheckBoxAdapter.cs" />
     <Compile Include="Adapters\MyFragmentPagerAdapter.cs" />
+    <Compile Include="Controls\ManagementSwipeToDeleteCallback.cs" />
+    <Compile Include="Controls\MyActionBarDrawerToggle.cs" />
     <Compile Include="Enumerators\GlobalEnums.cs" />
     <Compile Include="Fragments\CandidateManagement.cs" />
+    <Compile Include="Fragments\CompetenctiesManagement.cs" />
     <Compile Include="Fragments\Home.cs" />
+    <Compile Include="Fragments\JobsManagement.cs" />
     <Compile Include="Fragments\ManagementFragment.cs" />
+    <Compile Include="Fragments\TrainingManagement.cs" />
     <Compile Include="Fragments\WorkExperienceManagement.cs" />
     <Compile Include="Objects\Candidate.cs" />
     <Compile Include="Objects\Competition.cs" />
@@ -242,6 +247,9 @@
     <AndroidResource Include="Resources\layout\Home.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\main_menu.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.28.0.0.1\build\monoandroid70\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.28.0.0.1\build\monoandroid70\Xamarin.Android.Support.Vector.Drawable.targets')" />

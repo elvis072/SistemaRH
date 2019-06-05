@@ -18,9 +18,12 @@ using System.Threading.Tasks;
 
 namespace SistemaRH.Fragments
 {
-    public class WorkExperienceManagement : ManagementFragment, IGetData
+    public class WorkExperienceManagement : ManagementFragment, IManagementOperations
     {
-        public override IGetData GetDataListener => this;
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+        }
 
         public async Task<List<ManagementItem>> GetData()
         {
@@ -40,12 +43,29 @@ namespace SistemaRH.Fragments
                     });
                 }        
             }
-            else
-                Activity?.RunOnUiThread(() =>
-                {
-                    Toast.MakeText(Activity, Resource.String.errorMessage, ToastLength.Short).Show();
-                });
             return items;
+        }
+
+        public override void OnResume()
+        {
+            ManagementOperationsListener = this;
+            base.OnResume();
+        }
+
+        public override void OnPause()
+        {
+            ManagementOperationsListener = null;
+            base.OnPause();
+        }
+
+        public async Task RemoveObject(long objId)
+        {
+            await MyLib.Instance.DeleteObjectAsync<WorkExperience>(objId);
+        }
+
+        public Task AddObject(long objId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

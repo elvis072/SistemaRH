@@ -371,5 +371,15 @@ namespace SistemaRH.Utilities
                 result = (int)(totalDays / 30 / 12) + " " + GetString(Resource.String.years);
             return result;
         }
+
+        public void SignOut(Activity activity)
+        {
+            if (activity == null)
+                return;
+
+            SaveUserId(0);
+            activity.StartActivity(new Intent(activity, typeof(Login)));
+            activity.Finish();
+        }
     }
 }

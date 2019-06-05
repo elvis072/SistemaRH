@@ -18,20 +18,22 @@ using System.Threading.Tasks;
 
 namespace SistemaRH.Fragments
 {
-    public class CandidateManagement : ManagementFragment, IGetData
+    public class CandidateManagement : ManagementFragment, IManagementOperations
     {
-        public override IGetData GetDataListener => this;
+        List<Candidate> candidates;
 
         public async Task<List<ManagementItem>> GetData()
         {           
             List<ManagementItem> items = new List<ManagementItem>();
-            var candidates = await MyLib.Instance.FindAllObjectsAsync<Candidate>();
+            var emple = await MyLib.Instance.FindAllObjectsAsync<Employee>();
+            candidates = await MyLib.Instance.FindAllObjectsAsync<Candidate>();
             if (candidates != null && candidates.Count > 0)
             {
                 foreach (var c in candidates)
                 {
                     items.Add(new ManagementItem()
                     {
+                        Id = c.Id,
                         Title = $"{c?.Name} ({c?.Username})",
                         Description = $"{MyLib.Instance.GetString(Resource.String.job)}: {c?.ExpectedJob?.Name}\n" +
                                       $"{MyLib.Instance.GetString(Resource.String.expectedSalary)}: {c?.ExpectedSalary}\n" +
@@ -39,12 +41,55 @@ namespace SistemaRH.Fragments
                     });
                 }
             }
+            return items;
+        }
+
+        public override void OnResume()
+        { 
+            ManagementOperationsListener = this;
+            base.OnResume();
+        }
+
+        public override void OnPause()
+        {
+            ManagementOperationsListener = null;
+            base.OnPause();
+        }
+
+        public async Task RemoveObject(long objId)
+        {
+            await MyLib.Instance.DeleteObjectAsync<Candidate>(objId);
+        }
+
+        public async Task AddObject(long objId)
+        {
+            var candidate = candidates.Where(x => x.Id == objId).FirstOrDefault();
+            if (candidate != null)
+            {
+                await RemoveObject(objId);
+                Employee newEmployee = new Employee()
+                {
+                    IdentificationCard = candidate.IdentificationCard,
+                    Name = candidate.Name,
+                    EntryDate = DateTime.Now,
+                    Department = candidate.Department,
+                    Job = candidate.ExpectedJob,
+                    MensualSalary = candidate.ExpectedSalary,
+                    State = true
+                };
+                await MyLib.Instance.InsertObjectAsync(newEmployee);
+
+                Activity?.RunOnUiThread(() =>
+                {
+                    Toast.MakeText(Activity, Resource.String.candidateAccepted, ToastLength.Short).Show();
+                });             
+            } 
             else
                 Activity?.RunOnUiThread(() =>
                 {
                     Toast.MakeText(Activity, Resource.String.errorMessage, ToastLength.Short).Show();
                 });
-            return items;
+
         }
     }
 }

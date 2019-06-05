@@ -7,7 +7,7 @@ namespace SistemaRH.Objects
     {
         [PrimaryKey, AutoIncrement]
         public long Id { get; set; }
-        public int IdentificationCard { get; set; }
+        public long IdentificationCard { get; set; }
         public string Name { get; set; }
         public DateTime EntryDate { get; set; }
         public Department Department { get; set; }

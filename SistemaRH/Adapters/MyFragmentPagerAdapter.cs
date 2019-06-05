@@ -20,6 +20,7 @@ namespace SistemaRH.Adapters
                 return fragments.Count;
             }
         }
+       
 
         public override Fragment GetItem(int position)
         {

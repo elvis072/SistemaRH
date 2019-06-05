@@ -36,5 +36,21 @@ namespace SistemaRH.Enumerators
             Doctorate,
             Technical
         }
+
+        public enum ManagementSwipeActions
+        {
+            None,
+            Delete,
+            Add,
+            DeleteAndAdd
+        }
+
+        public enum AdminOptions : int
+        {
+            CompetenctiesManagement = 0,
+            LanguagesManagement = 1,
+            TrainingManagement = 2,
+            JobsManagement = 3
+        }
     }
 }

@@ -28,14 +28,17 @@ namespace SistemaRH.Activities
             base.OnCreate(savedInstanceState);        
             SetContentView(Resource.Layout.Login);
 
-            //await MyLib.Instance.DeleteAllObjectsAsync<Job>();
-            //await MyLib.Instance.DeleteAllObjectsAsync<Department>();
-            //await MyLib.Instance.DeleteAllObjectsAsync<Competition>();
-            //await MyLib.Instance.DeleteAllObjectsAsync<Training>();
-            //await SampleData.Instance.CreateJobs();
-            //await SampleData.Instance.CreateDepartments();
-            //await SampleData.Instance.CreateCompetitions();
-            //await SampleData.Instance.CreateTrainings();
+            if (MyLib.Instance.GetUserId() == 0)
+            {
+                await MyLib.Instance.DeleteAllObjectsAsync<Job>();
+                await MyLib.Instance.DeleteAllObjectsAsync<Department>();
+                await MyLib.Instance.DeleteAllObjectsAsync<Competition>();
+                await MyLib.Instance.DeleteAllObjectsAsync<Training>();
+                await SampleData.Instance.CreateJobs();
+                await SampleData.Instance.CreateDepartments();
+                await SampleData.Instance.CreateCompetitions();
+                await SampleData.Instance.CreateTrainings();
+            }
             //StartActivity(new Intent(this, typeof(CandidateJob)));
 
             //User is logged

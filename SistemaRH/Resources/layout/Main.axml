@@ -11,22 +11,18 @@
       android:minHeight="?attr/actionBarSize"
       android:background="?attr/colorPrimary"
       app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-      app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
+      app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     <android.support.v4.widget.DrawerLayout
       android:id="@+id/dlMain"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
-      <LinearLayout
-        android:id="@+id/llMainLeftContainer"
-        android:layout_width="240dp"
+      <ListView
+        android:id="@+id/lvMain"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start">  
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:text="KLKKKKKKKKK!!!"/>
-      </LinearLayout>
+        android:choiceMode="singleChoice"
+        android:layout_gravity="start"
+        android:background="@color/appBackground"/>
       <FrameLayout
         android:id="@+id/flMainContainer"
         android:layout_width="match_parent"

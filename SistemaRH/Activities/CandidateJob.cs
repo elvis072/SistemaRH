@@ -97,19 +97,24 @@ namespace SistemaRH.Activities
             {
                 case Resource.Id.btnCandidateJobNext:
                     tilCandidateJobExpectedSalary.ErrorEnabled = false;
-                    if (jobs != null && jobs.Count > 0 && departments != null && departments.Count > 0 && Validations())
+                    if (Validations())
                     {
-                        var user = await MyLib.Instance.FindObjectAsync<Candidate>(MyLib.Instance.GetUserId());
-                        if (user != null)
+                        if (jobs != null && jobs.Count > 0 && departments != null && departments.Count > 0)
                         {
-                            user.ExpectedJob = jobs[spCandidateJobJob.SelectedItemPosition - 1];
-                            user.Department = departments[spCandidateJobDepartment.SelectedItemPosition - 1];
-                            user.ExpectedSalary = int.Parse(tietCandidateJobExpectedSalary.Text);
-                            bool isUpdated = await MyLib.Instance.UpdateObjectAsync(user);
-                            if (isUpdated)
+                            var user = await MyLib.Instance.FindObjectAsync<Candidate>(MyLib.Instance.GetUserId());
+                            if (user != null)
                             {
-                                StartActivity(new Intent(this, typeof(CandidateSkills)));
-                                Finish();
+                                user.ExpectedJob = jobs[spCandidateJobJob.SelectedItemPosition - 1];
+                                user.Department = departments[spCandidateJobDepartment.SelectedItemPosition - 1];
+                                user.ExpectedSalary = int.Parse(tietCandidateJobExpectedSalary.Text);
+                                bool isUpdated = await MyLib.Instance.UpdateObjectAsync(user);
+                                if (isUpdated)
+                                {
+                                    StartActivity(new Intent(this, typeof(CandidateSkills)));
+                                    Finish();
+                                }
+                                else
+                                    Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
                             }
                             else
                                 Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();

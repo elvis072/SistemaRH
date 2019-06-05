@@ -4,23 +4,28 @@ using Android.Views;
 using Android.Widget;
 using Android.Support.V7.Widget;
 using System.Collections.Generic;
+using Android.Content;
+using SistemaRH.Utilities;
+using SistemaRH.Fragments;
 
 namespace SistemaRH.Adapters
 {
     public class ManagementAdapter : RecyclerView.Adapter
     {
-        List<ManagementItem> items;
+        public List<ManagementItem> Items;
+        public ManagementFragment Parent;
 
-        public ManagementAdapter(List<ManagementItem> items)
-        {
-            this.items = items;
+        public ManagementAdapter(List<ManagementItem> items, ManagementFragment parent)
+        { 
+            Items = items;
+            Parent = parent;
         }
 
         public override int ItemCount
         {
             get
             {
-                return items.Count;
+                return Items.Count;
             }
         }
 
@@ -34,7 +39,7 @@ namespace SistemaRH.Adapters
         public override void OnBindViewHolder(RecyclerView.ViewHolder viewHolder, int position)
         {
             var holder = viewHolder as ManagementAdapterViewHolder;
-            var item = items[position];
+            var item = Items[position];
             if (holder != null && item != null)
             {
                 holder.TvManagementItemTitle.Text = item.Title;
@@ -57,6 +62,7 @@ namespace SistemaRH.Adapters
 
     public class ManagementItem
     {
+        public long Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
     }

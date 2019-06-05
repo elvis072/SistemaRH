@@ -26,6 +26,14 @@
   <string name="addWorkExperience">Añadir experiencia de trabajo</string>
   <string name="workExperienceAdded">Experiencia de trabajo añadida correctamente</string>
   <string name="candidates">Candidatos</string>
+  <string name="candidateAccepted">El candidato ahora es un empleado</string>
+  <string name="notContent">No hay contenido</string>
+  <string name="signOut">Cerrar sesión</string>
+  <string name="trainingLevel">Nivel de la capacitación</string>
+  <string name="institution">Institución</string>
+  <string name="riskLevel">Nivel de riesgo</string>
+  <string name="minSalary">Salario mínimo</string>
+  <string name="maxSalary">Salario máximo</string>
   
   <!--Errors-->
   <string name="usernameCannotBeEmpty">El nombre de usuario no puede estar vacío</string>
@@ -46,4 +54,11 @@
   <!--Dates-->
   <string name="moths">Meses</string>
   <string name="years">Años</string>
+
+  <string-array name="adminOptions">
+    <item>Gestión de competencias</item>
+    <item>Gestión de idiomas</item>
+    <item>Gestión de capacitaciones</item>
+    <item>Gestión de puestos</item>
+  </string-array>    
 </resources>
