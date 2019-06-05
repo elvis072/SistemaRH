@@ -63,10 +63,12 @@ namespace SistemaRH.Activities
             jobs = await MyLib.Instance.FindAllObjectsAsync<Job>();
             if (jobs != null && jobs.Count > 0)
             {
-                foreach (var job in jobs)
+                for (int i = 0; i < jobs.Count; i++)
                 {
-                    if (job?.State ?? false)
-                        jobsNames.Add(job.Name);
+                    if (jobs[i]?.State ?? false)
+                        jobsNames.Add(jobs[i].Name);
+                    else
+                        jobs.RemoveAt(i);
                 }
                 jobsAdapter.AddAll(jobsNames);
                 jobsAdapter.NotifyDataSetChanged();
@@ -77,10 +79,12 @@ namespace SistemaRH.Activities
             departments = await MyLib.Instance.FindAllObjectsAsync<Department>();
             if (departments != null && departments.Count > 0)
             {
-                foreach (var department in departments)
+                for (int i = 0; i < departments.Count; i++)
                 {
-                    if (department.State)
-                        departmnetsNames.Add(department.Description);
+                    if (departments[i]?.State ?? false)
+                        departmnetsNames.Add(departments[i].Description);
+                    else
+                        departments.RemoveAt(i);
                 }
                 departmentsAdapter.AddAll(departmnetsNames);
                 departmentsAdapter.NotifyDataSetChanged();
@@ -93,18 +97,18 @@ namespace SistemaRH.Activities
             {
                 case Resource.Id.btnCandidateJobNext:
                     tilCandidateJobExpectedSalary.ErrorEnabled = false;
-                    if (Validations())
+                    if (jobs != null && jobs.Count > 0 && departments != null && departments.Count > 0 && Validations())
                     {
                         var user = await MyLib.Instance.FindObjectAsync<Candidate>(MyLib.Instance.GetUserId());
                         if (user != null)
                         {
-                            user.ExpectedJob = jobs[spCandidateJobJob.SelectedItemPosition];
-                            user.Department = departments[spCandidateJobDepartment.SelectedItemPosition];
+                            user.ExpectedJob = jobs[spCandidateJobJob.SelectedItemPosition - 1];
+                            user.Department = departments[spCandidateJobDepartment.SelectedItemPosition - 1];
                             user.ExpectedSalary = int.Parse(tietCandidateJobExpectedSalary.Text);
                             bool isUpdated = await MyLib.Instance.UpdateObjectAsync(user);
                             if (isUpdated)
                             {
-                                StartActivity(new Intent(this, typeof(CandidateJob)));
+                                StartActivity(new Intent(this, typeof(CandidateSkills)));
                                 Finish();
                             }
                             else
@@ -125,8 +129,8 @@ namespace SistemaRH.Activities
                 valid = false;
                 tilCandidateJobExpectedSalary.Error = MyLib.Instance.GetString(Resource.String.emptyFieldError);
             }
-            if ((spCandidateJobJob.SelectedItem?.Equals(MyLib.Instance.GetString(Resource.String.none)) ?? false) ||
-                (spCandidateJobDepartment.SelectedItem?.Equals(MyLib.Instance.GetString(Resource.String.none)) ?? false))
+            if ((spCandidateJobJob.SelectedItem?.Equals(MyLib.Instance.GetString(Resource.String.none)) ?? true) ||
+                (spCandidateJobDepartment.SelectedItem?.Equals(MyLib.Instance.GetString(Resource.String.none)) ?? true))
             {               
                 valid = false;
                 Toast.MakeText(this, Resource.String.spinnerSelectItemError, ToastLength.Short).Show();

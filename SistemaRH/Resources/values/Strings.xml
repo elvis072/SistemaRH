@@ -17,7 +17,7 @@
   <string name="none">Ninguno...</string>
   <string name="competitions">Competencias</string>
   <string name="trainings">Capacitaciones</string>
-  <string name="workExperience">Work experience</string>
+  <string name="workExperience">Experiencia de trabajo</string>
   <string name="recommendatedFor">Recommendado por</string>
   <string name="salary">Salario</string>
   <string name="enterprise">Empresa</string>
@@ -25,6 +25,7 @@
   <string name="toDate">Hasta la fecha</string>
   <string name="addWorkExperience">Añadir experiencia de trabajo</string>
   <string name="workExperienceAdded">Experiencia de trabajo añadida correctamente</string>
+  <string name="candidates">Candidatos</string>
   
   <!--Errors-->
   <string name="usernameCannotBeEmpty">El nombre de usuario no puede estar vacío</string>

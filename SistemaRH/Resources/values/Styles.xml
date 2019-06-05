@@ -41,4 +41,11 @@
     <item name="color">@color/appBackground</item>
     <item name="spinBars">true</item>
   </style>
+
+  <style name="MyTabLayoutStyle" parent="Widget.Design.TabLayout">
+    <item name="tabBackground">@color/colorPrimary</item>
+    <item name="tabIndicatorColor">@color/appBackground</item>
+    <item name="tabSelectedTextColor">@color/appBackground</item>
+    <item name="tabTextColor">@color/colorPrimaryDark</item>
+  </style>
 </resources>

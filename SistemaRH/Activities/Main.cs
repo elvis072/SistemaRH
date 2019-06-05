@@ -14,6 +14,7 @@ using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 using SupportFragment = Android.Support.V4.App.Fragment;
 using Android.Support.V4.Widget;
 using Android.Content.PM;
+using SistemaRH.Fragments;
 
 namespace SistemaRH.Activities
 {
@@ -35,7 +36,7 @@ namespace SistemaRH.Activities
             dlMain = FindViewById<DrawerLayout>(Resource.Id.dlMain);
             SetSupportActionBar(toolbar);
 
-            mStackFragments = new Stack<SupportFragment>();
+            mStackFragments = new Stack<SupportFragment>();      
 
             drawerToggle = new ActionBarDrawerToggle(this, dlMain, 0, 0) { DrawerIndicatorEnabled = true };
             dlMain.RemoveDrawerListener(drawerToggle);
@@ -44,6 +45,8 @@ namespace SistemaRH.Activities
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowTitleEnabled(true);
             drawerToggle.SyncState();
+
+            ShowFragment(new Home());
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -54,16 +57,17 @@ namespace SistemaRH.Activities
 
         private void ShowFragment(SupportFragment fragment)
         {
-            if (fragment.IsVisible)
+            if (fragment == null || fragment.IsVisible)
                 return;
-
+                     
             var trans = SupportFragmentManager.BeginTransaction();
-            trans.Hide(mCurrentFragment);
-            trans.Show(fragment);
-            trans.AddToBackStack(null);
-            trans.Commit();
-
-            mStackFragments.Push(mCurrentFragment);
+            if (mCurrentFragment != null)
+            {
+                trans.Hide(mCurrentFragment);          
+                mStackFragments.Push(mCurrentFragment);
+            }
+            trans.Add(Resource.Id.flMainContainer, fragment, fragment.GetType().Name);       
+            trans.Commit();        
             mCurrentFragment = fragment;
         }
 

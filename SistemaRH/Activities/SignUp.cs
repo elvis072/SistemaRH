@@ -22,6 +22,7 @@ namespace SistemaRH.Activities
     [Activity(Label = "SignUp", Theme = "@style/AppTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait, WindowSoftInputMode = SoftInput.StateHidden | SoftInput.AdjustUnspecified)]
     public class SignUp : AppCompatActivity, View.IOnClickListener
     {
+        private TextInputLayout tilSignUpName;
         private TextInputLayout tilSignUpUsername;
         private TextInputLayout tilSignUpIdentCard;
         private TextInputLayout tilSignUpPassword;
@@ -36,8 +37,9 @@ namespace SistemaRH.Activities
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.SignUp);            
-     
+            SetContentView(Resource.Layout.SignUp);
+
+            tilSignUpName = FindViewById<TextInputLayout>(Resource.Id.tilSignUpName);
             tilSignUpUsername = FindViewById<TextInputLayout>(Resource.Id.tilSignUpUsername);
             tilSignUpIdentCard = FindViewById<TextInputLayout>(Resource.Id.tilSignUpIdentCard);
             tilSignUpPassword = FindViewById<TextInputLayout>(Resource.Id.tilSignUpPassword);
@@ -51,6 +53,7 @@ namespace SistemaRH.Activities
 
             btnSignUpCreateAccount.SetOnClickListener(this);
 
+            MyLib.Instance.AddAfterTextChangeToTextInputLayout(tilSignUpName);
             MyLib.Instance.AddAfterTextChangeToTextInputLayout(tilSignUpUsername);
             MyLib.Instance.AddAfterTextChangeToTextInputLayout(tilSignUpIdentCard);
             MyLib.Instance.AddAfterTextChangeToTextInputLayout(tilSignUpPassword);
@@ -73,6 +76,13 @@ namespace SistemaRH.Activities
         {
             bool valid = true;
             bool isValidUsername = true;
+
+            //Name's validations
+            if (string.IsNullOrEmpty(tietSignUpName.Text))
+            {
+                valid = false;
+                tilSignUpName.Error = MyLib.Instance.GetString(Resource.String.emptyFieldError);
+            }
 
             //Username's validations
             valid = isValidUsername = MyLib.Instance.ValidateUsername(tilSignUpUsername);

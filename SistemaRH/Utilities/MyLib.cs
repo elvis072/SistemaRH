@@ -205,7 +205,7 @@ namespace SistemaRH.Utilities
                         else
                             pFind += paramsToFind[i].Key + "='" + paramsToFind[i].Value + "'";
                     }
-
+                    
                     var results = await connection.QueryAsync<T>("SELECT " + pReturn + " FROM " + typeof(T).Name + " WHERE " + pFind);
                     return results;
                 }

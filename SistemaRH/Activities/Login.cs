@@ -36,11 +36,11 @@ namespace SistemaRH.Activities
             //await SampleData.Instance.CreateDepartments();
             //await SampleData.Instance.CreateCompetitions();
             //await SampleData.Instance.CreateTrainings();
-            StartActivity(new Intent(this, typeof(Main)));
+            //StartActivity(new Intent(this, typeof(CandidateJob)));
 
             //User is logged
-            //if (MyLib.Instance.GetUserId() != 0)
-            //    MyLib.Instance.OpenMainActivity(this);
+            if (MyLib.Instance.GetUserId() != 0)
+                MyLib.Instance.OpenMainActivity(this);
 
             tilLoginUsername = FindViewById<TextInputLayout>(Resource.Id.tilLoginUsername);
             tilLoginPassword = FindViewById<TextInputLayout>(Resource.Id.tilLoginPassword);
@@ -101,8 +101,8 @@ namespace SistemaRH.Activities
                     new KeyValuePair<string, string>(nameof(user.Password), user.Password)});
 
             if (result != null && result.Count > 0)
-            {
-                user = result.FirstOrDefault();
+            {            
+                user = await MyLib.Instance.FindObjectAsync<Candidate>(result.FirstOrDefault().Id);
                 MyLib.Instance.SaveUserId(user.Id);
                 if (user.Role == UsersRoles.Candidate)
                 {                  
