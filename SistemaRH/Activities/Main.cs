@@ -63,7 +63,7 @@ namespace SistemaRH.Activities
             SupportActionBar.SetDisplayShowTitleEnabled(true);
             drawerToggle.SyncState();
 
-            ShowFragment(new Home(), "Home");
+            ShowFragment(new Home(), nameof(Home));
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -90,7 +90,7 @@ namespace SistemaRH.Activities
 
         private void ShowFragment(SupportFragment fragment, string title)
         {
-            if (fragment == null || fragment.IsVisible)
+            if ((fragment?.IsVisible ?? true) || (mCurrentFragment?.GetType()?.Equals(fragment?.GetType()) ?? false))
                 return;
                      
             var trans = SupportFragmentManager.BeginTransaction();
@@ -98,11 +98,12 @@ namespace SistemaRH.Activities
             {
                 trans.Hide(mCurrentFragment);          
                 mStackFragments.Push(mCurrentFragment);
+                mStackTitles.Push(SupportActionBar.Title);
             }
+  
             trans.Add(Resource.Id.flMainContainer, fragment, fragment.GetType().Name);       
             trans.Commit();        
             mCurrentFragment = fragment;
-            mStackTitles.Push(title);
             SupportActionBar.Title = title;
         }
 
@@ -113,7 +114,7 @@ namespace SistemaRH.Activities
                 var trans = SupportFragmentManager.BeginTransaction();
                 var fragment = mStackFragments.Pop();
                 var title = mStackTitles.Pop();
-                trans.Hide(mCurrentFragment);
+                trans.Remove(mCurrentFragment);
                 trans.Show(fragment);
                 trans.Commit();
                 mCurrentFragment = fragment;
@@ -128,20 +129,17 @@ namespace SistemaRH.Activities
             switch(position)
             {
                 case (int)AdminOptions.CompetenctiesManagement:
-                    CompetenctiesManagement competenctiesManagement = new CompetenctiesManagement();
-                    competenctiesManagement.ManagementSwipeActions = ManagementSwipeActions.Delete;
+                    CompetenceManagement competenctiesManagement = new CompetenceManagement { ManagementSwipeActions = ManagementSwipeActions.Delete };
                     ShowFragment(competenctiesManagement, MyLib.Instance.GetString(Resource.String.competitions));
                     break;
                 case (int)AdminOptions.LanguagesManagement:
                     break;
                 case (int)AdminOptions.TrainingManagement:
-                    TrainingManagement trainingManagement = new TrainingManagement();
-                    trainingManagement.ManagementSwipeActions = ManagementSwipeActions.Delete;
+                    TrainingManagement trainingManagement = new TrainingManagement { ManagementSwipeActions = ManagementSwipeActions.Delete };
                     ShowFragment(trainingManagement, MyLib.Instance.GetString(Resource.String.trainings));
                     break;
                 case (int)AdminOptions.JobsManagement:
-                    JobsManagement jobsManagement = new JobsManagement();
-                    jobsManagement.ManagementSwipeActions = ManagementSwipeActions.Delete;
+                    JobManagement jobsManagement = new JobManagement { ManagementSwipeActions = ManagementSwipeActions.Delete };
                     ShowFragment(jobsManagement, MyLib.Instance.GetString(Resource.String.jobs));
                     break;
             }

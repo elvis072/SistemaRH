@@ -156,12 +156,11 @@
     <Compile Include="Adapters\MultiCheckBoxAdapter.cs" />
     <Compile Include="Adapters\MyFragmentPagerAdapter.cs" />
     <Compile Include="Controls\ManagementSwipeToDeleteCallback.cs" />
-    <Compile Include="Controls\MyActionBarDrawerToggle.cs" />
     <Compile Include="Enumerators\GlobalEnums.cs" />
     <Compile Include="Fragments\CandidateManagement.cs" />
-    <Compile Include="Fragments\CompetenctiesManagement.cs" />
+    <Compile Include="Fragments\CompetenceManagement.cs" />
     <Compile Include="Fragments\Home.cs" />
-    <Compile Include="Fragments\JobsManagement.cs" />
+    <Compile Include="Fragments\JobManagement.cs" />
     <Compile Include="Fragments\ManagementFragment.cs" />
     <Compile Include="Fragments\TrainingManagement.cs" />
     <Compile Include="Fragments\WorkExperienceManagement.cs" />

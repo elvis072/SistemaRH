@@ -13,13 +13,12 @@ using Android.Widget;
 using SistemaRH.Adapters;
 using SistemaRH.Objects;
 using SistemaRH.Utilities;
-using static SistemaRH.Enumerators.GlobalEnums;
 
 namespace SistemaRH.Fragments
 {
-    public class JobsManagement : ManagementFragment, IManagementOperations
+    public class CompetenceManagement : ManagementFragment, IManagementOperations
     {
-        List<Job> jobs;
+        List<Competition> competitions;
 
         public override void OnResume()
         {
@@ -41,18 +40,15 @@ namespace SistemaRH.Fragments
         public async Task<List<ManagementItem>> GetData()
         {
             List<ManagementItem> items = new List<ManagementItem>();
-            jobs = await MyLib.Instance.FindAllObjectsAsync<Job>();
-            if (jobs != null && jobs.Count > 0)
+            competitions = await MyLib.Instance.FindAllObjectsAsync<Competition>();
+            if (competitions != null && competitions.Count > 0)
             {
-                foreach (var j in jobs)
+                foreach (var c in competitions)
                 {
                     items.Add(new ManagementItem()
                     {
-                        Id = j.Id,
-                        Title = j?.Name,
-                        Description = $"{MyLib.Instance.GetString(Resource.String.riskLevel)}: {Enum.GetName(typeof(RiskLevel), j?.RiskLevel)}\n" +
-                                      $"{MyLib.Instance.GetString(Resource.String.minSalary)}: {j?.MinSalary}\n" +
-                                      $"{MyLib.Instance.GetString(Resource.String.maxSalary)}: {j?.MaxSalary}"
+                        Id = c.Id,
+                        Title = c?.Description
                     });
                 }
             }
@@ -61,7 +57,7 @@ namespace SistemaRH.Fragments
 
         public async Task RemoveObject(long objId)
         {
-            await MyLib.Instance.DeleteObjectAsync<Job>(objId);
+            await MyLib.Instance.DeleteObjectAsync<Competition>(objId);
         }
     }
 }
