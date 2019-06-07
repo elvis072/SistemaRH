@@ -81,13 +81,10 @@ namespace SistemaRH.Utilities
             bool isSucessfull = false;
             try
             {
-                await Task.Run(() =>
-                {
-                    var connection = new SQLiteConnection(GetDBPath());
-                    connection.CreateTables(types: types);
-                    connection.Close();
-                    isSucessfull = true;
-                });
+                var connection = new SQLiteAsyncConnection(GetDBPath());
+                var result = await connection.CreateTablesAsync(types: types);
+                isSucessfull = result != null && result.Results != null && result.Results.Count == types.Count();
+                connection.CloseAsync().GetAwaiter();
             }
             catch (SQLiteException)
             {
@@ -100,17 +97,14 @@ namespace SistemaRH.Utilities
             bool isSucessfull = false;
             try
             {
-                await Task.Run(async () =>
-                {
-                    var connection = new SQLiteConnection(GetDBPath());
-                    if (!await TableExistAsync<T>())
-                        connection.CreateTable<T>();
-                    connection.InsertWithChildren(obj);
-                    connection.Close();
-                    isSucessfull = true;
-                });
+                var connection = new SQLiteConnection(GetDBPath());
+                if (!await TableExistAsync<T>())
+                    connection.CreateTable<T>();
+                connection.InsertWithChildren(obj);
+                connection.Close();
+                isSucessfull = true;
             }
-            catch (SQLiteException e)
+            catch (SQLiteException)
             {
             }
             return isSucessfull;
@@ -121,15 +115,12 @@ namespace SistemaRH.Utilities
             bool isSucessfull = false;
             try
             {
-                await Task.Run(async () =>
-                {
-                    var connection = new SQLiteConnection(GetDBPath());
-                    if (!await TableExistAsync<T>())
-                        connection.CreateTable<T>();
-                    connection.InsertAllWithChildren(objs);           
-                    connection.Close();
-                    isSucessfull = true;
-                });
+                var connection = new SQLiteConnection(GetDBPath());
+                if (!await TableExistAsync<T>())
+                    connection.CreateTable<T>();
+                connection.InsertAllWithChildren(objs);
+                connection.Close();
+                isSucessfull = true;
             }
             catch (SQLiteException)
             {
@@ -142,15 +133,12 @@ namespace SistemaRH.Utilities
             T result = default(T);
             try
             {
-                await Task.Run(async () => 
+                if (await TableExistAsync<T>())
                 {
-                    if (await TableExistAsync<T>())
-                    {
-                        var connection = new SQLiteConnection(GetDBPath());
-                        result = connection.GetWithChildren<T>(obj_id);
-                        connection.Close();
-                    }
-                });
+                    var connection = new SQLiteConnection(GetDBPath());
+                    result = connection.GetWithChildren<T>(obj_id);
+                    connection.Close();
+                }
             }
             catch (SQLiteException)
             {
@@ -163,16 +151,12 @@ namespace SistemaRH.Utilities
             List<T> results = default(List<T>);
             try
             {
-                await Task.Run(async () =>
+                if (await TableExistAsync<T>())
                 {
-                    if (await TableExistAsync<T>())
-                    {
-                        var connection = new SQLiteConnection(GetDBPath());
-                        results = connection.GetAllWithChildren<T>();
-                        connection.Close();                        
-                    }
-                });
-
+                    var connection = new SQLiteConnection(GetDBPath());
+                    results = connection.GetAllWithChildren<T>();
+                    connection.Close();
+                }
             }
             catch (SQLiteException)
             {
@@ -222,16 +206,13 @@ namespace SistemaRH.Utilities
             bool isSucessfull = false;
             try
             {
-                await Task.Run(async () =>
+                if (await TableExistAsync<T>())
                 {
-                    if (await TableExistAsync<T>())
-                    {
-                        var connection = new SQLiteConnection(GetDBPath());
-                        connection.UpdateWithChildren(obj);
-                        connection.Close();
-                        isSucessfull = true;
-                    }
-                });
+                    var connection = new SQLiteConnection(GetDBPath());
+                    connection.UpdateWithChildren(obj);
+                    connection.Close();
+                    isSucessfull = true;
+                }
             }
             catch (SQLiteException)
             {
@@ -337,7 +318,7 @@ namespace SistemaRH.Utilities
             return valid;
         }
 
-        public bool ValidateConfirmPassword(TextInputLayout textInputLayout)
+        public bool ValidateConfirmPassword(TextInputLayout textInputLayout, string password)
         {
             bool valid = true;
             if (string.IsNullOrEmpty(textInputLayout.EditText.Text))
@@ -347,7 +328,7 @@ namespace SistemaRH.Utilities
             }
             else
             {
-                if (!textInputLayout.EditText.Text.Equals(textInputLayout.EditText.Text))
+                if (!textInputLayout.EditText.Text.Equals(password))
                 {
                     valid = false;
                     textInputLayout.Error = GetString(Resource.String.differentPasswordError);

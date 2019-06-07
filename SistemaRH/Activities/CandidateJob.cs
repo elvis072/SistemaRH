@@ -101,27 +101,26 @@ namespace SistemaRH.Activities
                     {
                         if (jobs != null && jobs.Count > 0 && departments != null && departments.Count > 0)
                         {
-                            var user = await MyLib.Instance.FindObjectAsync<Candidate>(MyLib.Instance.GetUserId());
+                            var user = await MyLib.Instance.FindObjectAsync<User>(MyLib.Instance.GetUserId());
                             if (user != null)
                             {
-                                user.ExpectedJob = jobs[spCandidateJobJob.SelectedItemPosition - 1];
-                                user.Department = departments[spCandidateJobDepartment.SelectedItemPosition - 1];
-                                user.ExpectedSalary = int.Parse(tietCandidateJobExpectedSalary.Text);
-                                var res = await MyLib.Instance.FindObjectAsync<Candidate>(user.Id);
-                                bool isUpdated = await MyLib.Instance.UpdateObjectAsync(user);
-                                if (isUpdated)
+                                var candidate = await MyLib.Instance.FindObjectAsync<Candidate>(user.CandidateId);
+                                if (candidate != null)
                                 {
-                                    StartActivity(new Intent(this, typeof(CandidateSkills)));
-                                    Finish();
+                                    candidate.ExpectedJob = jobs[spCandidateJobJob.SelectedItemPosition - 1];
+                                    candidate.Department = departments[spCandidateJobDepartment.SelectedItemPosition - 1];
+                                    candidate.ExpectedSalary = int.Parse(tietCandidateJobExpectedSalary.Text);                 
+                                    bool isUpdated = await MyLib.Instance.UpdateObjectAsync(candidate);
+                                    if (isUpdated)
+                                    {
+                                        StartActivity(new Intent(this, typeof(CandidateSkills)));
+                                        Finish();
+                                        return;
+                                    }
                                 }
-                                else
-                                    Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
                             }
-                            else
-                                Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
-                        }
-                        else
-                            Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
+                        }             
+                        Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
                     }
                     break;
             }     

@@ -98,14 +98,12 @@ namespace SistemaRH.Activities
             valid = MyLib.Instance.ValidatePassword(tilSignUpPassword);
 
             //Confirm password's validations
-            valid = MyLib.Instance.ValidateConfirmPassword(tilSignUpConfirmPassword);
+            valid = MyLib.Instance.ValidateConfirmPassword(tilSignUpConfirmPassword, tietSignUpPassword.Text);
 
             //Async's validations
             if (isValidUsername)
             {
-                var res = await MyLib.Instance.FindAllObjectsAsync<Candidate>();
-
-                var result = await MyLib.Instance.FindObjectsWithCustomQueryAsync<Candidate>(
+                var result = await MyLib.Instance.FindObjectsWithCustomQueryAsync<User>(
                     new List<string>() { "*" }, 
                     new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Username", tietSignUpUsername.Text) } );
                 if (result != null && result.Count > 0)
@@ -120,29 +118,40 @@ namespace SistemaRH.Activities
 
         private async void CreateNewUser()
         {           
-            Candidate newUser = new Candidate()
+            bool areAllUserChildrenTablesCreated = await MyLib.Instance.CreateTables(new Type[] { typeof(Candidate), typeof(Employee) });
+            if (areAllUserChildrenTablesCreated)
             {
-                Name = tietSignUpName.Text,
-                Username = tietSignUpUsername.Text,
-                IdentificationCard = long.Parse(tietSignUpIdentCard.Text),
-                Password = MyLib.Instance.EncryptText(tietSignUpPassword.Text)             
-            };
+                User newUser = new User()
+                {
+                    Username = tietSignUpUsername.Text,
+                    Password = MyLib.Instance.EncryptText(tietSignUpPassword.Text)
+                };
 
-            bool areAllCandidateChildrenTablesCreated = await MyLib.Instance.CreateTables(new Type[] { typeof(Job), typeof(Department), typeof(Competition), typeof(Training), typeof(WorkExperience) });
-            if (areAllCandidateChildrenTablesCreated)
-            {
                 bool isUserCreated = await MyLib.Instance.InsertObjectAsync(newUser);
                 if (isUserCreated)
                 {
-                    MyLib.Instance.SaveUserId(newUser.Id);
-                    StartActivity(new Intent(this, typeof(CandidateJob)));
-                    Finish();
+                    bool areAllCandidateChildrenTablesCreated = await MyLib.Instance.CreateTables(new Type[] { typeof(Job), typeof(Department), typeof(Competition), typeof(Training), typeof(WorkExperience) });
+                    if (areAllCandidateChildrenTablesCreated)
+                    {
+                        Candidate newCandidate = new Candidate()
+                        {
+                            Name = tietSignUpName.Text,
+                            IdentificationCard = long.Parse(tietSignUpIdentCard.Text),
+                            User = newUser
+                        };
+
+                        bool isCandidateCreated = await MyLib.Instance.InsertObjectAsync(newCandidate);
+                        if (isCandidateCreated)
+                        {
+                            MyLib.Instance.SaveUserId(newUser.Id);
+                            StartActivity(new Intent(this, typeof(CandidateJob)));
+                            Finish();
+                            return;
+                        }
+                    }
                 }
-                else
-                    Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
             }
-            else
-                Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
+            Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
         }
     }
 }

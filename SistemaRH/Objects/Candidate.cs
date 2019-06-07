@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using SQLite;
-using static SistemaRH.Enumerators.GlobalEnums;
 using SQLiteNetExtensions.Attributes;
 
 namespace SistemaRH.Objects
@@ -10,10 +9,10 @@ namespace SistemaRH.Objects
         [PrimaryKey, AutoIncrement]
         public long Id { get; set; }
         public string Name { get; set; }
-        public string Username { get; set; }
         public long IdentificationCard { get; set; }
-        public int ExpectedSalary { get; set; }    
-        public string Password { get; set; }       
+        public int ExpectedSalary { get; set; }
+        [OneToOne]
+        public User User { get; set; }
         [OneToOne]         
         public Job ExpectedJob { get; set; }
         [OneToOne]
@@ -25,6 +24,5 @@ namespace SistemaRH.Objects
         [OneToMany]
         public List<WorkExperience> WorkExperiences { get; set; }
         public string RecommendatedBy { get; set; }
-        public UsersRoles Role { get; set; } = UsersRoles.Candidate;
     }
 }

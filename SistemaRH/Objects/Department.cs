@@ -11,6 +11,9 @@ namespace SistemaRH.Objects
         [ForeignKey(typeof(Candidate))]
         public long CandidateId { get; set; }
 
+        [ForeignKey(typeof(Employee))]
+        public long EmployeeId { get; set; }
+
         public string Description { get; set; }
         public bool State { get; set; }
     }

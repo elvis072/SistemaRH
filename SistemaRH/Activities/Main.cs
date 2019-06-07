@@ -19,6 +19,7 @@ using SistemaRH.Utilities;
 using static SistemaRH.Enumerators.GlobalEnums;
 using Android.Content.Res;
 using SistemaRH.Controls;
+using SistemaRH.Objects;
 
 namespace SistemaRH.Activities
 {
@@ -32,7 +33,7 @@ namespace SistemaRH.Activities
         private ArrayAdapter<string> lvMainAdapter;
         private SupportFragment mCurrentFragment;
         private Stack<SupportFragment> mStackFragments;
-        private Stack<string> mStackTitles;
+        private Stack<string> mStackTitles;      
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -46,24 +47,32 @@ namespace SistemaRH.Activities
 
             mStackFragments = new Stack<SupportFragment>();
             mStackTitles = new Stack<string>();
-
-            var items = Application.Context.Resources.GetStringArray(Resource.Array.adminOptions);
-            lvMainAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, items);
-            lvMain.Adapter = lvMainAdapter;
-            lvMain.OnItemClickListener = this;
-            lvMain.BringToFront();
-            lvMain.RequestLayout();
-
-            drawerToggle = new ActionBarDrawerToggle(this, dlMain, 0, 0) { DrawerIndicatorEnabled = true };
-            dlMain.RemoveDrawerListener(drawerToggle);
-            dlMain.AddDrawerListener(drawerToggle);
-            dlMain.FocusableInTouchMode = false;
-            SupportActionBar.SetHomeButtonEnabled(true);
-            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
-            SupportActionBar.SetDisplayShowTitleEnabled(true);
-            drawerToggle.SyncState();
-
+           
             ShowFragment(new Home(), nameof(Home));
+            ShowOrHideAdminOptions();
+        }
+
+        private async void ShowOrHideAdminOptions()
+        {
+            var user = await MyLib.Instance.FindObjectAsync<User>(MyLib.Instance.GetUserId());
+            if (user != null && user.Role == UsersRoles.Admin)
+            {
+                var items = Application.Context.Resources.GetStringArray(Resource.Array.adminOptions);
+                lvMainAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, items);
+                lvMain.Adapter = lvMainAdapter;
+                lvMain.OnItemClickListener = this;
+                lvMain.BringToFront();
+                lvMain.RequestLayout();
+
+                drawerToggle = new ActionBarDrawerToggle(this, dlMain, 0, 0) { DrawerIndicatorEnabled = true };
+                dlMain.RemoveDrawerListener(drawerToggle);
+                dlMain.AddDrawerListener(drawerToggle);
+                dlMain.FocusableInTouchMode = false;
+                SupportActionBar.SetHomeButtonEnabled(true);
+                SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+                SupportActionBar.SetDisplayShowTitleEnabled(true);
+                drawerToggle.SyncState();
+            }
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)

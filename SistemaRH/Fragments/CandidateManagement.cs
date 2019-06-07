@@ -34,7 +34,7 @@ namespace SistemaRH.Fragments
                     items.Add(new ManagementItem()
                     {
                         Id = c.Id,
-                        Title = $"{c?.Name} ({c?.Username})",
+                        Title = $"{c?.Name}",
                         Description = $"{MyLib.Instance.GetString(Resource.String.job)}: {c?.ExpectedJob?.Name}\n" +
                                       $"{MyLib.Instance.GetString(Resource.String.expectedSalary)}: {c?.ExpectedSalary}\n" +
                                       $"{MyLib.Instance.GetString(Resource.String.department)}: {c?.Department?.Description}"
@@ -58,7 +58,17 @@ namespace SistemaRH.Fragments
 
         public async Task RemoveObject(long objId)
         {
-            await MyLib.Instance.DeleteObjectAsync<Candidate>(objId);
+            var candidate = candidates.Where(x => x.Id == objId).FirstOrDefault();
+            if (candidate != null)
+            {
+                await MyLib.Instance.DeleteObjectAsync<Candidate>(objId);
+                await MyLib.Instance.DeleteObjectAsync<User>(candidate.User.Id);               
+            }
+            else
+                Activity?.RunOnUiThread(() =>
+                {
+                    Toast.MakeText(Activity, Resource.String.errorMessage, ToastLength.Short).Show();
+                });
         }
 
         public async Task AddObject(long objId)
@@ -66,9 +76,11 @@ namespace SistemaRH.Fragments
             var candidate = candidates.Where(x => x.Id == objId).FirstOrDefault();
             if (candidate != null)
             {
-                await RemoveObject(objId);
+                candidate.User.Role = Enumerators.GlobalEnums.UsersRoles.Employee;
+                await MyLib.Instance.UpdateObjectAsync(candidate.User);
                 Employee newEmployee = new Employee()
                 {
+                    User = candidate.User,
                     IdentificationCard = candidate.IdentificationCard,
                     Name = candidate.Name,
                     EntryDate = DateTime.Now,
@@ -78,6 +90,7 @@ namespace SistemaRH.Fragments
                     State = true
                 };
                 await MyLib.Instance.InsertObjectAsync(newEmployee);
+                await MyLib.Instance.DeleteObjectAsync<Candidate>(objId);
 
                 Activity?.RunOnUiThread(() =>
                 {
@@ -89,7 +102,6 @@ namespace SistemaRH.Fragments
                 {
                     Toast.MakeText(Activity, Resource.String.errorMessage, ToastLength.Short).Show();
                 });
-
         }
     }
 }

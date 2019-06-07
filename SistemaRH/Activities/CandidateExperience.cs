@@ -89,9 +89,7 @@ namespace SistemaRH.Activities
                     {
                         StartActivity(new Intent(this, typeof(Main)));
                         Finish();
-                    }
-                    else
-                        Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
+                    }        
                     break;
             }       
         }
@@ -141,34 +139,33 @@ namespace SistemaRH.Activities
                 bool isInserted = await MyLib.Instance.InsertObjectAsync(workExperience);
                 if (isInserted)
                 {
-                    var user = await MyLib.Instance.FindObjectAsync<Candidate>(MyLib.Instance.GetUserId());
+                    var user = await MyLib.Instance.FindObjectAsync<User>(MyLib.Instance.GetUserId());
                     if (user != null)
                     {
-                        if (user.WorkExperiences == null)
-                            user.WorkExperiences = new List<WorkExperience>();
-                        user.WorkExperiences.Add(workExperience);
-                        bool isUpdated = await MyLib.Instance.UpdateObjectAsync(user);
-                        if (isUpdated)
-                        {   
-                            //Reset values
-                            tietCandidateExperienceSalary.Text = tietCandidateExperienceEnterprise.Text = tietCandidateExperienceFromDate.Text =
-                                tietCandidateExperienceToDate.Text = tietCandidateExperienceRecommendations.Text = string.Empty;
-                            Calendar calendar = Calendar.Instance;
-                            fromDatePicker.UpdateDate(calendar.Get(CalendarField.Year), calendar.Get(CalendarField.Month), calendar.Get(CalendarField.DayOfMonth));
-                            toDatePicker.UpdateDate(calendar.Get(CalendarField.Year), calendar.Get(CalendarField.Month), calendar.Get(CalendarField.DayOfMonth));
+                        var candidate = await MyLib.Instance.FindObjectAsync<Candidate>(user.CandidateId);
+                        if (candidate != null)
+                        {
+                            if (candidate.WorkExperiences == null)
+                                candidate.WorkExperiences = new List<WorkExperience>();
+                            candidate.WorkExperiences.Add(workExperience);
+                            bool isUpdated = await MyLib.Instance.UpdateObjectAsync(candidate);
+                            if (isUpdated)
+                            {
+                                //Reset values
+                                tietCandidateExperienceSalary.Text = tietCandidateExperienceEnterprise.Text = tietCandidateExperienceFromDate.Text =
+                                    tietCandidateExperienceToDate.Text = tietCandidateExperienceRecommendations.Text = string.Empty;
+                                Calendar calendar = Calendar.Instance;
+                                fromDatePicker.UpdateDate(calendar.Get(CalendarField.Year), calendar.Get(CalendarField.Month), calendar.Get(CalendarField.DayOfMonth));
+                                toDatePicker.UpdateDate(calendar.Get(CalendarField.Year), calendar.Get(CalendarField.Month), calendar.Get(CalendarField.DayOfMonth));
 
-                            //Show confirmation message
-                            Toast.MakeText(this, Resource.String.workExperienceAdded, ToastLength.Short).Show();
-                            isSucessfull = true;
+                                //Show confirmation message
+                                Toast.MakeText(this, Resource.String.workExperienceAdded, ToastLength.Short).Show();
+                                isSucessfull = true;
+                            }        
                         }
-                        else
-                            Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
                     }
-                    else
-                        Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
                 }
-                else
-                    Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
+                Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
             }
             return isSucessfull;
         }

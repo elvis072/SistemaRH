@@ -171,6 +171,7 @@
     <Compile Include="Objects\Job.cs" />
     <Compile Include="Objects\Language.cs" />
     <Compile Include="Objects\Training.cs" />
+    <Compile Include="Objects\User.cs" />
     <Compile Include="Objects\WorkExperience.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,6 +12,9 @@ namespace SistemaRH.Objects
         [ForeignKey(typeof(Candidate))]
         public long CandidateId { get; set; }
 
+        [ForeignKey(typeof(Employee))]
+        public long EmployeeId { get; set; }
+
         public string Name { get; set; }
         public RiskLevel RiskLevel { get; set; }
         public int MinSalary { get; set; }

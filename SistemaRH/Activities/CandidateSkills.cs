@@ -68,6 +68,7 @@ namespace SistemaRH.Activities
                     multiCheckBoxItemsCompetitions.Add(new MultiCheckBoxItem() { Description = competetion.Description });
                 }
                 multiCheckBoxAdapterCompetitions.NotifyItemRangeInserted(0, multiCheckBoxItemsCompetitions.Count);
+                rvCandidateSkillsCompetitions.Animate().ScaleY(1.0f).SetDuration(100);
             }
 
             //Trainings
@@ -82,6 +83,7 @@ namespace SistemaRH.Activities
                         $"{(string.IsNullOrEmpty(training.Institution) ? string.Empty : training.Institution)}" });
                 }
                 multiCheckBoxAdapterTrainings.NotifyItemRangeInserted(0, multiCheckBoxItemsTrainings.Count);
+                rvCandidateSkillsTrainings.Animate().ScaleY(1.0f).SetDuration(100);
             }
         }
 
@@ -118,22 +120,24 @@ namespace SistemaRH.Activities
                             }
                         }
 
-                        var user = await MyLib.Instance.FindObjectAsync<Candidate>(MyLib.Instance.GetUserId());
+                        var user = await MyLib.Instance.FindObjectAsync<User>(MyLib.Instance.GetUserId());
                         if (user != null)
                         {
-                            user.Competitions = selectedCompetitions;
-                            user.Trainings = selectedTrainings;
-                            bool isUpdated = await MyLib.Instance.UpdateObjectAsync(user);
-                            if (isUpdated)
+                            var candidate = await MyLib.Instance.FindObjectAsync<Candidate>(user.CandidateId);
+                            if (candidate != null)
                             {
-                                StartActivity(new Intent(this, typeof(CandidateExperience)));
-                                Finish();
+                                candidate.Competitions = selectedCompetitions;
+                                candidate.Trainings = selectedTrainings;
+                                bool isUpdated = await MyLib.Instance.UpdateObjectAsync(candidate);                                
+                                if (isUpdated)
+                                {
+                                    StartActivity(new Intent(this, typeof(CandidateExperience)));
+                                    Finish();
+                                    return;
+                                }
                             }
-                            else
-                                Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
                         }
-                        else
-                            Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
+                        Toast.MakeText(this, Resource.String.errorMessage, ToastLength.Short).Show();
                     }
                     else
                         Toast.MakeText(this, Resource.String.minOneOptionMessageError, ToastLength.Short).Show();                                   

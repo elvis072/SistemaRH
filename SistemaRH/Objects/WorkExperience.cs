@@ -15,7 +15,6 @@ namespace SistemaRH.Objects
         public int Salary { get; set; }
         public string Enterprise { get; set; }
         public DateTime FromDate { get; set; }
-        public DateTime ToDate { get; set; }
-  
+        public DateTime ToDate { get; set; }  
     }
 }
