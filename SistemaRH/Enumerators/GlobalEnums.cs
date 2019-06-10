@@ -16,7 +16,6 @@ namespace SistemaRH.Enumerators
     {
         public enum UsersRoles
         {
-            Admin,
             Employee,
             Candidate
         }
@@ -45,7 +44,7 @@ namespace SistemaRH.Enumerators
             DeleteAndAdd
         }
 
-        public enum AdminOptions : int
+        public enum EmployeeOptions : int
         {
             CompetenctiesManagement = 0,
             LanguagesManagement = 1,

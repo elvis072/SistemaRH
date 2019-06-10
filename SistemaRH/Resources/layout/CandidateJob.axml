@@ -37,7 +37,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:numeric="integer"
-      android:maxLength="@integer/expectedSalaryMaxlength"
+      android:maxLength="@integer/salaryMaxlength"
       android:theme="@style/MyTextInputEditTextStyle"/>
   </android.support.design.widget.TextInputLayout>
   <Button

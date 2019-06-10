@@ -28,22 +28,8 @@ namespace SistemaRH.Activities
         {
             base.OnCreate(savedInstanceState);
 
-            //if (MyLib.Instance.GetUserId() == 0)
-            //{
-            //    await MyLib.Instance.DeleteAllObjectsAsync<Job>();
-            //    await MyLib.Instance.DeleteAllObjectsAsync<Department>();
-            //    await MyLib.Instance.DeleteAllObjectsAsync<Competition>();
-            //    await MyLib.Instance.DeleteAllObjectsAsync<Training>();
-            //    await SampleData.Instance.CreateJobs();
-            //    await SampleData.Instance.CreateDepartments();
-            //    await SampleData.Instance.CreateCompetitions();
-            //    await SampleData.Instance.CreateTrainings();
-            //}
-
-            //    await SampleData.Instance.CreateJobs();
-            //    await SampleData.Instance.CreateDepartments();
-            //    await SampleData.Instance.CreateCompetitions();
-            //    await SampleData.Instance.CreateTrainings();
+            await SampleData.Instance.GenerateAllSampleData();
+            Application.Context.GetSharedPreferences("app_data", FileCreationMode.Private).Edit().PutBoolean("first_time", false).Apply();
 
             //User is logged
             if (MyLib.Instance.GetUserId() != 0)

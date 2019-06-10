@@ -35,6 +35,7 @@
   <string name="riskLevel">Nivel de riesgo</string>
   <string name="minSalary">Salario mínimo</string>
   <string name="maxSalary">Salario máximo</string>
+  <string name="save">Guardar</string>
   
   <!--Errors-->
   <string name="usernameCannotBeEmpty">El nombre de usuario no puede estar vacío</string>
@@ -56,7 +57,7 @@
   <string name="moths">Meses</string>
   <string name="years">Años</string>
 
-  <string-array name="adminOptions">
+  <string-array name="employeeOptions">
     <item>Gestión de competencias</item>
     <item>Gestión de idiomas</item>
     <item>Gestión de capacitaciones</item>

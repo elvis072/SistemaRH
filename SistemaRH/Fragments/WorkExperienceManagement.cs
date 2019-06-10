@@ -33,15 +33,15 @@ namespace SistemaRH.Fragments
             {
                 foreach (var we in workExperience)
                 {
-                    items.Add(new ManagementItem()
-                    {
-                        Id = we.Id,
-                        //Title = $"{we?.Name} ({we?.Username})",
-                        Description = $"{MyLib.Instance.GetString(Resource.String.salary)}: {we?.Salary}\n" +
-                                      $"{MyLib.Instance.GetString(Resource.String.enterprise)}: {we?.Enterprise}\n" +
-                                      $"{MyLib.Instance.GetString(Resource.String.fromDate)}: {we?.FromDate.ToShortDateString()}\n" +
-                                      $"{MyLib.Instance.GetString(Resource.String.toDate)}: {we?.ToDate.ToShortDateString()}"
-                    });
+                    if (we != null)
+                        items.Add(new ManagementItem()
+                        {
+                            Id = we.Id,
+                            Title = $"{we.Enterprise}",
+                            Description = $"{MyLib.Instance.GetString(Resource.String.salary)}: {we.Salary}\n" +               
+                                          $"{MyLib.Instance.GetString(Resource.String.fromDate)}: {we.FromDate.ToShortDateString()}\n" +
+                                          $"{MyLib.Instance.GetString(Resource.String.toDate)}: {we.ToDate.ToShortDateString()}"
+                        });
                 }        
             }
             return items;
@@ -67,6 +67,16 @@ namespace SistemaRH.Fragments
         public Task AddObject(long objId)
         {
             throw new NotImplementedException();
+        }
+
+        public Task EditObject(long objId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ChangeObjectState(long objId)
+        {
+            return null;
         }
     }
 }

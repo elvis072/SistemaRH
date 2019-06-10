@@ -96,7 +96,7 @@ namespace SistemaRH
 		{
 			
 			// aapt resource value: 0x7f0c0000
-			public const int adminOptions = 2131492864;
+			public const int employeeOptions = 2131492864;
 			
 			static Array()
 			{
@@ -2093,8 +2093,8 @@ namespace SistemaRH
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f06009e
-			public const int action0 = 2131099806;
+			// aapt resource value: 0x7f0600a0
+			public const int action0 = 2131099808;
 			
 			// aapt resource value: 0x7f06005e
 			public const int action_bar = 2131099742;
@@ -2120,8 +2120,8 @@ namespace SistemaRH
 			// aapt resource value: 0x7f06005f
 			public const int action_context_bar = 2131099743;
 			
-			// aapt resource value: 0x7f0600a2
-			public const int action_divider = 2131099810;
+			// aapt resource value: 0x7f0600a4
+			public const int action_divider = 2131099812;
 			
 			// aapt resource value: 0x7f060003
 			public const int action_menu_divider = 2131099651;
@@ -2138,8 +2138,8 @@ namespace SistemaRH
 			// aapt resource value: 0x7f06003f
 			public const int action_mode_close_button = 2131099711;
 			
-			// aapt resource value: 0x7f0600b6
-			public const int action_signOut = 2131099830;
+			// aapt resource value: 0x7f0600c0
+			public const int action_signOut = 2131099840;
 			
 			// aapt resource value: 0x7f060040
 			public const int activity_chooser_view_content = 2131099712;
@@ -2180,17 +2180,20 @@ namespace SistemaRH
 			// aapt resource value: 0x7f060093
 			public const int btnLogin = 2131099795;
 			
-			// aapt resource value: 0x7f0600b5
-			public const int btnSignUpCreateAccount = 2131099829;
+			// aapt resource value: 0x7f0600b4
+			public const int btnPopupJobSave = 2131099828;
+			
+			// aapt resource value: 0x7f0600bf
+			public const int btnSignUpCreateAccount = 2131099839;
 			
 			// aapt resource value: 0x7f060047
 			public const int buttonPanel = 2131099719;
 			
-			// aapt resource value: 0x7f06009f
-			public const int cancel_action = 2131099807;
+			// aapt resource value: 0x7f0600a1
+			public const int cancel_action = 2131099809;
 			
-			// aapt resource value: 0x7f06009d
-			public const int cbMultiCheckBoxItem = 2131099805;
+			// aapt resource value: 0x7f06009f
+			public const int cbMultiCheckBoxItem = 2131099807;
 			
 			// aapt resource value: 0x7f06002c
 			public const int center = 2131099692;
@@ -2204,8 +2207,8 @@ namespace SistemaRH
 			// aapt resource value: 0x7f060055
 			public const int checkbox = 2131099733;
 			
-			// aapt resource value: 0x7f0600a5
-			public const int chronometer = 2131099813;
+			// aapt resource value: 0x7f0600a7
+			public const int chronometer = 2131099815;
 			
 			// aapt resource value: 0x7f060035
 			public const int clip_horizontal = 2131099701;
@@ -2258,8 +2261,8 @@ namespace SistemaRH
 			// aapt resource value: 0x7f06001d
 			public const int end = 2131099677;
 			
-			// aapt resource value: 0x7f0600aa
-			public const int end_padder = 2131099818;
+			// aapt resource value: 0x7f0600ac
+			public const int end_padder = 2131099820;
 			
 			// aapt resource value: 0x7f060026
 			public const int enterAlways = 2131099686;
@@ -2306,8 +2309,8 @@ namespace SistemaRH
 			// aapt resource value: 0x7f060042
 			public const int image = 2131099714;
 			
-			// aapt resource value: 0x7f0600a9
-			public const int info = 2131099817;
+			// aapt resource value: 0x7f0600ab
+			public const int info = 2131099819;
 			
 			// aapt resource value: 0x7f060000
 			public const int item_touch_helper_previous_elevation = 2131099648;
@@ -2315,11 +2318,11 @@ namespace SistemaRH
 			// aapt resource value: 0x7f060030
 			public const int left = 2131099696;
 			
-			// aapt resource value: 0x7f0600a3
-			public const int line1 = 2131099811;
+			// aapt resource value: 0x7f0600a5
+			public const int line1 = 2131099813;
 			
-			// aapt resource value: 0x7f0600a7
-			public const int line3 = 2131099815;
+			// aapt resource value: 0x7f0600a9
+			public const int line3 = 2131099817;
 			
 			// aapt resource value: 0x7f06000b
 			public const int listMode = 2131099659;
@@ -2327,11 +2330,14 @@ namespace SistemaRH
 			// aapt resource value: 0x7f060044
 			public const int list_item = 2131099716;
 			
+			// aapt resource value: 0x7f06009c
+			public const int llManagementItemTitleContainer = 2131099804;
+			
 			// aapt resource value: 0x7f060097
 			public const int lvMain = 2131099799;
 			
-			// aapt resource value: 0x7f0600a1
-			public const int media_actions = 2131099809;
+			// aapt resource value: 0x7f0600a3
+			public const int media_actions = 2131099811;
 			
 			// aapt resource value: 0x7f06001e
 			public const int middle = 2131099678;
@@ -2462,6 +2468,9 @@ namespace SistemaRH
 			// aapt resource value: 0x7f06007a
 			public const int spCandidateJobJob = 2131099770;
 			
+			// aapt resource value: 0x7f0600af
+			public const int spPopupJobRiskLevel = 2131099823;
+			
 			// aapt resource value: 0x7f060048
 			public const int spacer = 2131099720;
 			
@@ -2480,8 +2489,8 @@ namespace SistemaRH
 			// aapt resource value: 0x7f060032
 			public const int start = 2131099698;
 			
-			// aapt resource value: 0x7f0600a0
-			public const int status_bar_latest_event_content = 2131099808;
+			// aapt resource value: 0x7f0600a2
+			public const int status_bar_latest_event_content = 2131099810;
 			
 			// aapt resource value: 0x7f060058
 			public const int submenuarrow = 2131099736;
@@ -2489,14 +2498,17 @@ namespace SistemaRH
 			// aapt resource value: 0x7f060069
 			public const int submit_area = 2131099753;
 			
+			// aapt resource value: 0x7f06009b
+			public const int swManagementItem = 2131099803;
+			
 			// aapt resource value: 0x7f06000d
 			public const int tabMode = 2131099661;
 			
-			// aapt resource value: 0x7f0600a8
-			public const int text = 2131099816;
+			// aapt resource value: 0x7f0600aa
+			public const int text = 2131099818;
 			
-			// aapt resource value: 0x7f0600a6
-			public const int text2 = 2131099814;
+			// aapt resource value: 0x7f0600a8
+			public const int text2 = 2131099816;
 			
 			// aapt resource value: 0x7f060050
 			public const int textSpacerNoButtons = 2131099728;
@@ -2528,20 +2540,29 @@ namespace SistemaRH
 			// aapt resource value: 0x7f060090
 			public const int tietLoginUsername = 2131099792;
 			
-			// aapt resource value: 0x7f0600b4
-			public const int tietSignUpConfirmPassword = 2131099828;
+			// aapt resource value: 0x7f0600b3
+			public const int tietPopupJobMaxSalary = 2131099827;
 			
-			// aapt resource value: 0x7f0600b0
-			public const int tietSignUpIdentCard = 2131099824;
-			
-			// aapt resource value: 0x7f0600ac
-			public const int tietSignUpName = 2131099820;
-			
-			// aapt resource value: 0x7f0600b2
-			public const int tietSignUpPassword = 2131099826;
+			// aapt resource value: 0x7f0600b1
+			public const int tietPopupJobMinSalary = 2131099825;
 			
 			// aapt resource value: 0x7f0600ae
-			public const int tietSignUpUsername = 2131099822;
+			public const int tietPopupJobName = 2131099822;
+			
+			// aapt resource value: 0x7f0600be
+			public const int tietSignUpConfirmPassword = 2131099838;
+			
+			// aapt resource value: 0x7f0600ba
+			public const int tietSignUpIdentCard = 2131099834;
+			
+			// aapt resource value: 0x7f0600b6
+			public const int tietSignUpName = 2131099830;
+			
+			// aapt resource value: 0x7f0600bc
+			public const int tietSignUpPassword = 2131099836;
+			
+			// aapt resource value: 0x7f0600b8
+			public const int tietSignUpUsername = 2131099832;
 			
 			// aapt resource value: 0x7f06006f
 			public const int tilCandidateExperienceEnterprise = 2131099759;
@@ -2567,23 +2588,32 @@ namespace SistemaRH
 			// aapt resource value: 0x7f06008f
 			public const int tilLoginUsername = 2131099791;
 			
-			// aapt resource value: 0x7f0600b3
-			public const int tilSignUpConfirmPassword = 2131099827;
+			// aapt resource value: 0x7f0600b2
+			public const int tilPopupJobMaxSalary = 2131099826;
 			
-			// aapt resource value: 0x7f0600af
-			public const int tilSignUpIdentCard = 2131099823;
-			
-			// aapt resource value: 0x7f0600ab
-			public const int tilSignUpName = 2131099819;
-			
-			// aapt resource value: 0x7f0600b1
-			public const int tilSignUpPassword = 2131099825;
+			// aapt resource value: 0x7f0600b0
+			public const int tilPopupJobMinSalary = 2131099824;
 			
 			// aapt resource value: 0x7f0600ad
-			public const int tilSignUpUsername = 2131099821;
+			public const int tilPopupJobName = 2131099821;
 			
-			// aapt resource value: 0x7f0600a4
-			public const int time = 2131099812;
+			// aapt resource value: 0x7f0600bd
+			public const int tilSignUpConfirmPassword = 2131099837;
+			
+			// aapt resource value: 0x7f0600b9
+			public const int tilSignUpIdentCard = 2131099833;
+			
+			// aapt resource value: 0x7f0600b5
+			public const int tilSignUpName = 2131099829;
+			
+			// aapt resource value: 0x7f0600bb
+			public const int tilSignUpPassword = 2131099835;
+			
+			// aapt resource value: 0x7f0600b7
+			public const int tilSignUpUsername = 2131099831;
+			
+			// aapt resource value: 0x7f0600a6
+			public const int time = 2131099814;
 			
 			// aapt resource value: 0x7f060046
 			public const int title = 2131099718;
@@ -2615,11 +2645,11 @@ namespace SistemaRH
 			// aapt resource value: 0x7f060094
 			public const int tvLoginSignUp = 2131099796;
 			
-			// aapt resource value: 0x7f06009c
-			public const int tvManagementItemDescription = 2131099804;
+			// aapt resource value: 0x7f06009e
+			public const int tvManagementItemDescription = 2131099806;
 			
-			// aapt resource value: 0x7f06009b
-			public const int tvManagementItemTitle = 2131099803;
+			// aapt resource value: 0x7f06009d
+			public const int tvManagementItemTitle = 2131099805;
 			
 			// aapt resource value: 0x7f060099
 			public const int tvManagementNotContent = 2131099801;
@@ -2673,9 +2703,6 @@ namespace SistemaRH
 			// aapt resource value: 0x7f0b0004
 			public const int design_snackbar_text_max_lines = 2131427332;
 			
-			// aapt resource value: 0x7f0b000b
-			public const int expectedSalaryMaxlength = 2131427339;
-			
 			// aapt resource value: 0x7f0b0009
 			public const int identCardMaxlength = 2131427337;
 			
@@ -2684,6 +2711,9 @@ namespace SistemaRH
 			
 			// aapt resource value: 0x7f0b000a
 			public const int passwordMaxlength = 2131427338;
+			
+			// aapt resource value: 0x7f0b000b
+			public const int salaryMaxlength = 2131427339;
 			
 			// aapt resource value: 0x7f0b0003
 			public const int status_bar_notification_info_maxnum = 2131427331;
@@ -2873,19 +2903,22 @@ namespace SistemaRH
 			public const int notification_template_part_time = 2130903095;
 			
 			// aapt resource value: 0x7f030038
-			public const int select_dialog_item_material = 2130903096;
+			public const int PopupJob = 2130903096;
 			
 			// aapt resource value: 0x7f030039
-			public const int select_dialog_multichoice_material = 2130903097;
+			public const int select_dialog_item_material = 2130903097;
 			
 			// aapt resource value: 0x7f03003a
-			public const int select_dialog_singlechoice_material = 2130903098;
+			public const int select_dialog_multichoice_material = 2130903098;
 			
 			// aapt resource value: 0x7f03003b
-			public const int SignUp = 2130903099;
+			public const int select_dialog_singlechoice_material = 2130903099;
 			
 			// aapt resource value: 0x7f03003c
-			public const int support_simple_spinner_dropdown_item = 2130903100;
+			public const int SignUp = 2130903100;
+			
+			// aapt resource value: 0x7f03003d
+			public const int support_simple_spinner_dropdown_item = 2130903101;
 			
 			static Layout()
 			{
@@ -3045,17 +3078,17 @@ namespace SistemaRH
 			// aapt resource value: 0x7f070030
 			public const int department = 2131165232;
 			
-			// aapt resource value: 0x7f07004e
-			public const int differentPasswordError = 2131165262;
+			// aapt resource value: 0x7f07004f
+			public const int differentPasswordError = 2131165263;
 			
-			// aapt resource value: 0x7f070051
-			public const int emptyFieldError = 2131165265;
+			// aapt resource value: 0x7f070052
+			public const int emptyFieldError = 2131165266;
 			
 			// aapt resource value: 0x7f070039
 			public const int enterprise = 2131165241;
 			
-			// aapt resource value: 0x7f070053
-			public const int errorMessage = 2131165267;
+			// aapt resource value: 0x7f070054
+			public const int errorMessage = 2131165268;
 			
 			// aapt resource value: 0x7f070031
 			public const int expectedSalary = 2131165233;
@@ -3066,17 +3099,17 @@ namespace SistemaRH
 			// aapt resource value: 0x7f07002b
 			public const int identCard = 2131165227;
 			
-			// aapt resource value: 0x7f070048
-			public const int identCardCannotBeEmpty = 2131165256;
+			// aapt resource value: 0x7f070049
+			public const int identCardCannotBeEmpty = 2131165257;
 			
 			// aapt resource value: 0x7f070043
 			public const int institution = 2131165251;
 			
-			// aapt resource value: 0x7f07004b
-			public const int invalidIdentCard = 2131165259;
+			// aapt resource value: 0x7f07004c
+			public const int invalidIdentCard = 2131165260;
 			
-			// aapt resource value: 0x7f070050
-			public const int invalidUsernameOrPassword = 2131165264;
+			// aapt resource value: 0x7f070051
+			public const int invalidUsernameOrPassword = 2131165265;
 			
 			// aapt resource value: 0x7f07002e
 			public const int job = 2131165230;
@@ -3090,14 +3123,14 @@ namespace SistemaRH
 			// aapt resource value: 0x7f070046
 			public const int maxSalary = 2131165254;
 			
-			// aapt resource value: 0x7f070054
-			public const int minOneOptionMessageError = 2131165268;
+			// aapt resource value: 0x7f070055
+			public const int minOneOptionMessageError = 2131165269;
 			
 			// aapt resource value: 0x7f070045
 			public const int minSalary = 2131165253;
 			
-			// aapt resource value: 0x7f070055
-			public const int moths = 2131165269;
+			// aapt resource value: 0x7f070056
+			public const int moths = 2131165270;
 			
 			// aapt resource value: 0x7f07002a
 			public const int name = 2131165226;
@@ -3114,14 +3147,14 @@ namespace SistemaRH
 			// aapt resource value: 0x7f070026
 			public const int password = 2131165222;
 			
-			// aapt resource value: 0x7f070049
-			public const int passwordCannotBeEmpty = 2131165257;
+			// aapt resource value: 0x7f07004a
+			public const int passwordCannotBeEmpty = 2131165258;
+			
+			// aapt resource value: 0x7f07004e
+			public const int passwordDistintCharacters = 2131165262;
 			
 			// aapt resource value: 0x7f07004d
-			public const int passwordDistintCharacters = 2131165261;
-			
-			// aapt resource value: 0x7f07004c
-			public const int passwordMinLenght = 2131165260;
+			public const int passwordMinLenght = 2131165261;
 			
 			// aapt resource value: 0x7f070037
 			public const int recommendatedFor = 2131165239;
@@ -3132,6 +3165,9 @@ namespace SistemaRH
 			// aapt resource value: 0x7f070038
 			public const int salary = 2131165240;
 			
+			// aapt resource value: 0x7f070047
+			public const int save = 2131165255;
+			
 			// aapt resource value: 0x7f070013
 			public const int search_menu_title = 2131165203;
 			
@@ -3141,8 +3177,8 @@ namespace SistemaRH
 			// aapt resource value: 0x7f070029
 			public const int signUp = 2131165225;
 			
-			// aapt resource value: 0x7f070052
-			public const int spinnerSelectItemError = 2131165266;
+			// aapt resource value: 0x7f070053
+			public const int spinnerSelectItemError = 2131165267;
 			
 			// aapt resource value: 0x7f070014
 			public const int status_bar_notification_info_overflow = 2131165204;
@@ -3159,14 +3195,14 @@ namespace SistemaRH
 			// aapt resource value: 0x7f070025
 			public const int username = 2131165221;
 			
-			// aapt resource value: 0x7f070047
-			public const int usernameCannotBeEmpty = 2131165255;
+			// aapt resource value: 0x7f070048
+			public const int usernameCannotBeEmpty = 2131165256;
 			
-			// aapt resource value: 0x7f07004f
-			public const int usernameInUse = 2131165263;
+			// aapt resource value: 0x7f070050
+			public const int usernameInUse = 2131165264;
 			
-			// aapt resource value: 0x7f07004a
-			public const int usernameMinLenght = 2131165258;
+			// aapt resource value: 0x7f07004b
+			public const int usernameMinLenght = 2131165259;
 			
 			// aapt resource value: 0x7f070036
 			public const int workExperience = 2131165238;
@@ -3174,8 +3210,8 @@ namespace SistemaRH
 			// aapt resource value: 0x7f07003d
 			public const int workExperienceAdded = 2131165245;
 			
-			// aapt resource value: 0x7f070056
-			public const int years = 2131165270;
+			// aapt resource value: 0x7f070057
+			public const int years = 2131165271;
 			
 			static String()
 			{

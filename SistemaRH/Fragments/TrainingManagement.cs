@@ -46,15 +46,16 @@ namespace SistemaRH.Fragments
             {
                 foreach (var t in trainings)
                 {
-                    items.Add(new ManagementItem()
-                    {
-                        Id = t.Id,
-                        Title = t?.Description,
-                        Description = $"{MyLib.Instance.GetString(Resource.String.trainingLevel)}: {Enum.GetName(typeof(TrainingLevel), t?.TrainingLevel)}\n" +
-                                      $"{MyLib.Instance.GetString(Resource.String.institution)}: {t?.Institution}\n" +
-                                      $"{MyLib.Instance.GetString(Resource.String.fromDate)}: {t?.FromDate.ToShortDateString()}\n" +
-                                      $"{MyLib.Instance.GetString(Resource.String.toDate)}: {t?.ToDate.ToShortDateString()}"
-                    });
+                    if (t != null)
+                        items.Add(new ManagementItem()
+                        {
+                            Id = t.Id,
+                            Title = t.Description,
+                            Description = $"{MyLib.Instance.GetString(Resource.String.trainingLevel)}: {Enum.GetName(typeof(TrainingLevel), t?.TrainingLevel)}\n" +
+                                          $"{MyLib.Instance.GetString(Resource.String.institution)}: {t.Institution}\n" +
+                                          $"{MyLib.Instance.GetString(Resource.String.fromDate)}: {t.FromDate.ToShortDateString()}\n" +
+                                          $"{MyLib.Instance.GetString(Resource.String.toDate)}: {t.ToDate.ToShortDateString()}"
+                        });
                 }
             }
             return items;
@@ -63,6 +64,16 @@ namespace SistemaRH.Fragments
         public async Task RemoveObject(long objId)
         {
             await MyLib.Instance.DeleteObjectAsync<Training>(objId);
+        }
+
+        public Task EditObject(long objId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ChangeObjectState(long objId)
+        {
+            return null;
         }
     }
 }

@@ -45,11 +45,13 @@ namespace SistemaRH.Fragments
             {
                 foreach (var c in competitions)
                 {
-                    items.Add(new ManagementItem()
-                    {
-                        Id = c.Id,
-                        Title = c?.Description
-                    });
+                    if (c != null)
+                        items.Add(new ManagementItem()
+                        {
+                            Id = c.Id,
+                            Title = c.Description,
+                            State = c.State
+                        });
                 }
             }
             return items;
@@ -58,6 +60,18 @@ namespace SistemaRH.Fragments
         public async Task RemoveObject(long objId)
         {
             await MyLib.Instance.DeleteObjectAsync<Competition>(objId);
+        }
+
+        public Task EditObject(long objId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task ChangeObjectState(long objId)
+        {
+            var competition = competitions.Where(x => x.Id == objId).FirstOrDefault();
+            if (competition != null)
+                await MyLib.Instance.UpdateObjectAsync(competition);
         }
     }
 }

@@ -31,14 +31,15 @@ namespace SistemaRH.Fragments
             {
                 foreach (var c in candidates)
                 {
-                    items.Add(new ManagementItem()
-                    {
-                        Id = c.Id,
-                        Title = $"{c?.Name}",
-                        Description = $"{MyLib.Instance.GetString(Resource.String.job)}: {c?.ExpectedJob?.Name}\n" +
-                                      $"{MyLib.Instance.GetString(Resource.String.expectedSalary)}: {c?.ExpectedSalary}\n" +
-                                      $"{MyLib.Instance.GetString(Resource.String.department)}: {c?.Department?.Description}"
-                    });
+                    if (c != null)
+                        items.Add(new ManagementItem()
+                        {
+                            Id = c.Id,
+                            Title = $"{c?.Name}",
+                            Description = $"{MyLib.Instance.GetString(Resource.String.job)}: {c?.ExpectedJob?.Name}\n" +
+                                          $"{MyLib.Instance.GetString(Resource.String.expectedSalary)}: {c?.ExpectedSalary}\n" +
+                                          $"{MyLib.Instance.GetString(Resource.String.department)}: {c?.Department?.Description}"
+                        });
                 }
             }
             return items;
@@ -102,6 +103,16 @@ namespace SistemaRH.Fragments
                 {
                     Toast.MakeText(Activity, Resource.String.errorMessage, ToastLength.Short).Show();
                 });
+        }
+
+        public Task EditObject(long objId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ChangeObjectState(long objId)
+        {
+            return null;
         }
     }
 }

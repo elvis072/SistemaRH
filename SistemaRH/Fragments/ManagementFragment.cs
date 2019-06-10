@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Android.Support.V7.Widget.Helper;
 using SistemaRH.Controls;
 using static SistemaRH.Enumerators.GlobalEnums;
+using SistemaRH.Objects;
 
 namespace SistemaRH.Fragments
 {
@@ -25,6 +26,8 @@ namespace SistemaRH.Fragments
         Task<List<ManagementItem>> GetData();
         Task RemoveObject(long objId);
         Task AddObject(long objId);
+        Task EditObject(long objId);
+        Task ChangeObjectState(long objId);
     }
 
     public class ManagementFragment : Fragment
@@ -38,6 +41,8 @@ namespace SistemaRH.Fragments
         public IManagementOperations ManagementOperationsListener { set; get; }
 
         public ManagementSwipeActions ManagementSwipeActions { get; set; } = ManagementSwipeActions.None;
+
+        public UsersRoles CurrentUserRole { get; set; }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -55,6 +60,7 @@ namespace SistemaRH.Fragments
                 ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ManagementSwipeToDeleteCallback(rvManagementAdapter, ManagementSwipeActions));
                 itemTouchHelper.AttachToRecyclerView(rvManagement);
             }
+      
             return view;
         }
 
@@ -62,7 +68,12 @@ namespace SistemaRH.Fragments
         {
             base.OnResume();
             if (!IsDataLoaded)
-                SetData();
+            {
+                GetCurrentUserRole().GetAwaiter().OnCompleted(() => 
+                {
+                    SetData();
+                });
+            }
         }
 
         private async void SetData()
@@ -93,6 +104,13 @@ namespace SistemaRH.Fragments
                 tvManagementNotContent.Visibility = ViewStates.Gone;
                 rvManagement.Visibility = ViewStates.Visible;
             }
+        }
+
+        private async Task GetCurrentUserRole()
+        {
+            var user = await MyLib.Instance.FindObjectAsync<User>(MyLib.Instance.GetUserId());
+            if (user != null)
+                CurrentUserRole = user.Role;
         }
     }
 }

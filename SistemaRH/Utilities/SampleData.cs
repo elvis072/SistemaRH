@@ -3,6 +3,8 @@ using SistemaRH.Objects;
 using static SistemaRH.Enumerators.GlobalEnums;
 using System.Threading.Tasks;
 using System;
+using Android.App;
+using Android.Content;
 
 namespace SistemaRH.Utilities
 {
@@ -18,6 +20,17 @@ namespace SistemaRH.Utilities
                     sampleData = new SampleData();
                 return sampleData;
             }
+        }
+
+        public async Task GenerateAllSampleData()
+        {
+            if (Application.Context.GetSharedPreferences("app_data", FileCreationMode.Private).GetBoolean("first_time", true))
+            {
+                await CreateJobs();
+                await CreateDepartments();
+                await CreateCompetitions();
+                await CreateTrainings();
+            }    
         }
 
         public async Task CreateJobs()

@@ -49,15 +49,15 @@ namespace SistemaRH.Activities
             mStackTitles = new Stack<string>();
            
             ShowFragment(new Home(), nameof(Home));
-            ShowOrHideAdminOptions();
+            ShowOrHideEmployeeOptions();
         }
 
-        private async void ShowOrHideAdminOptions()
+        private async void ShowOrHideEmployeeOptions()
         {
             var user = await MyLib.Instance.FindObjectAsync<User>(MyLib.Instance.GetUserId());
-            if (user != null && user.Role == UsersRoles.Admin)
+            if (user != null && user.Role == UsersRoles.Employee)
             {
-                var items = Application.Context.Resources.GetStringArray(Resource.Array.adminOptions);
+                var items = Application.Context.Resources.GetStringArray(Resource.Array.employeeOptions);
                 lvMainAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, items);
                 lvMain.Adapter = lvMainAdapter;
                 lvMain.OnItemClickListener = this;
@@ -85,7 +85,7 @@ namespace SistemaRH.Activities
                     return true;
                 case Resource.Id.action_signOut:
                     MyLib.Instance.SignOut(this);
-                    return true; ;
+                    return true;
                 default:
                     return base.OnOptionsItemSelected(item);
             }
@@ -137,17 +137,17 @@ namespace SistemaRH.Activities
         {
             switch(position)
             {
-                case (int)AdminOptions.CompetenctiesManagement:
+                case (int)EmployeeOptions.CompetenctiesManagement:
                     CompetenceManagement competenctiesManagement = new CompetenceManagement { ManagementSwipeActions = ManagementSwipeActions.Delete };
                     ShowFragment(competenctiesManagement, MyLib.Instance.GetString(Resource.String.competitions));
                     break;
-                case (int)AdminOptions.LanguagesManagement:
+                case (int)EmployeeOptions.LanguagesManagement:
                     break;
-                case (int)AdminOptions.TrainingManagement:
+                case (int)EmployeeOptions.TrainingManagement:
                     TrainingManagement trainingManagement = new TrainingManagement { ManagementSwipeActions = ManagementSwipeActions.Delete };
                     ShowFragment(trainingManagement, MyLib.Instance.GetString(Resource.String.trainings));
                     break;
-                case (int)AdminOptions.JobsManagement:
+                case (int)EmployeeOptions.JobsManagement:
                     JobManagement jobsManagement = new JobManagement { ManagementSwipeActions = ManagementSwipeActions.Delete };
                     ShowFragment(jobsManagement, MyLib.Instance.GetString(Resource.String.jobs));
                     break;

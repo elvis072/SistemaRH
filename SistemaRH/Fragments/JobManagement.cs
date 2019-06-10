@@ -35,7 +35,7 @@ namespace SistemaRH.Fragments
 
         public Task AddObject(long objId)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public async Task<List<ManagementItem>> GetData()
@@ -46,14 +46,16 @@ namespace SistemaRH.Fragments
             {
                 foreach (var j in jobs)
                 {
-                    items.Add(new ManagementItem()
-                    {
-                        Id = j.Id,
-                        Title = j?.Name,
-                        Description = $"{MyLib.Instance.GetString(Resource.String.riskLevel)}: {Enum.GetName(typeof(RiskLevel), j?.RiskLevel)}\n" +
-                                      $"{MyLib.Instance.GetString(Resource.String.minSalary)}: {j?.MinSalary}\n" +
-                                      $"{MyLib.Instance.GetString(Resource.String.maxSalary)}: {j?.MaxSalary}"
-                    });
+                    if (j != null)
+                        items.Add(new ManagementItem()
+                        {
+                            Id = j.Id,
+                            Title = j.Name,
+                            Description = $"{MyLib.Instance.GetString(Resource.String.riskLevel)}: {Enum.GetName(typeof(RiskLevel), j.RiskLevel)}\n" +
+                                          $"{MyLib.Instance.GetString(Resource.String.minSalary)}: {j.MinSalary}\n" +
+                                          $"{MyLib.Instance.GetString(Resource.String.maxSalary)}: {j.MaxSalary}",
+                            State = j.State
+                        });
                 }
             }
             return items;
@@ -62,6 +64,18 @@ namespace SistemaRH.Fragments
         public async Task RemoveObject(long objId)
         {
             await MyLib.Instance.DeleteObjectAsync<Job>(objId);
+        }
+
+        public Task EditObject(long objId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task ChangeObjectState(long objId)
+        {
+            var job = jobs.Where(x => x.Id == objId).FirstOrDefault();
+            if (job != null)            
+                await MyLib.Instance.UpdateObjectAsync(job);            
         }
     }
 }

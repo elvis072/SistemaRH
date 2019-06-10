@@ -4,5 +4,5 @@
   <integer name="usernameMaxlength">30</integer>
   <integer name="identCardMaxlength">11</integer>
   <integer name="passwordMaxlength">30</integer>
-  <integer name="expectedSalaryMaxlength">9</integer>
+  <integer name="salaryMaxlength">9</integer>
 </resources>

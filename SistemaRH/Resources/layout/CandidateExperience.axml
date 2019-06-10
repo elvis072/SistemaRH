@@ -28,7 +28,7 @@
         android:id="@+id/tietCandidateExperienceSalary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLength="@integer/expectedSalaryMaxlength"
+        android:maxLength="@integer/salaryMaxlength"
         android:numeric="integer"
         android:theme="@style/MyTextInputEditTextStyle"/>
     </android.support.design.widget.TextInputLayout>
