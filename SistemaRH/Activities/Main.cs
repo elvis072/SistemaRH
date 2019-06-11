@@ -144,7 +144,11 @@ namespace SistemaRH.Activities
                 case (int)EmployeeOptions.LanguagesManagement:
                     break;
                 case (int)EmployeeOptions.TrainingManagement:
-                    TrainingManagement trainingManagement = new TrainingManagement { ManagementSwipeActions = ManagementSwipeActions.Delete };
+                    TrainingManagement trainingManagement = new TrainingManagement
+                    {
+                        ManagementSwipeActions = ManagementSwipeActions.Delete,
+                        ManagementItemOptions = ManagementItemOptions.OnlyCandidateOptions
+                    };
                     ShowFragment(trainingManagement, MyLib.Instance.GetString(Resource.String.trainings));
                     break;
                 case (int)EmployeeOptions.JobsManagement:

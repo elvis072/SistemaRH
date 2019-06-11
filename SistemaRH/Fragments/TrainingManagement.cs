@@ -33,7 +33,7 @@ namespace SistemaRH.Fragments
             base.OnPause();
         }
 
-        public Task AddObject(long objId)
+        public Task AddItem(ManagementItem item)
         {
             throw new NotImplementedException();
         }
@@ -61,17 +61,20 @@ namespace SistemaRH.Fragments
             return items;
         }
 
-        public async Task RemoveObject(long objId)
+        public async Task RemoveItem(ManagementItem item)
         {
-            await MyLib.Instance.DeleteObjectAsync<Training>(objId);
+            if (item == null)
+                return;
+
+            await MyLib.Instance.DeleteObjectAsync<Training>(item.Id);
         }
 
-        public Task EditObject(long objId)
+        public Task EditItem(ManagementItem item)
         {
             throw new NotImplementedException();
         }
 
-        public Task ChangeObjectState(long objId)
+        public Task ChangeItemState(ManagementItem item)
         {
             return null;
         }

@@ -65,7 +65,8 @@ namespace SistemaRH.Activities
             {
                 foreach(var competetion in competetions)
                 {
-                    multiCheckBoxItemsCompetitions.Add(new MultiCheckBoxItem() { Description = competetion.Description });
+                    if (competetion?.State ?? false)                    
+                        multiCheckBoxItemsCompetitions.Add(new MultiCheckBoxItem() { Description = competetion.Description });
                 }
                 multiCheckBoxAdapterCompetitions.NotifyItemRangeInserted(0, multiCheckBoxItemsCompetitions.Count);
                 rvCandidateSkillsCompetitions.Animate().ScaleY(1.0f).SetDuration(100);

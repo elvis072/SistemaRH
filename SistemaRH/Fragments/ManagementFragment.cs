@@ -24,10 +24,10 @@ namespace SistemaRH.Fragments
     public interface IManagementOperations
     {
         Task<List<ManagementItem>> GetData();
-        Task RemoveObject(long objId);
-        Task AddObject(long objId);
-        Task EditObject(long objId);
-        Task ChangeObjectState(long objId);
+        Task RemoveItem(ManagementItem item);
+        Task AddItem(ManagementItem item);
+        Task EditItem(ManagementItem item);
+        Task ChangeItemState(ManagementItem item);
     }
 
     public class ManagementFragment : Fragment
@@ -42,7 +42,7 @@ namespace SistemaRH.Fragments
 
         public ManagementSwipeActions ManagementSwipeActions { get; set; } = ManagementSwipeActions.None;
 
-        public UsersRoles CurrentUserRole { get; set; }
+        public ManagementItemOptions ManagementItemOptions { get; set; } = ManagementItemOptions.All;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -51,6 +51,7 @@ namespace SistemaRH.Fragments
             rvManagement = view.FindViewById<RecyclerView>(Resource.Id.rvManagement);
             rvManagement.SetItemViewCacheSize(40);
             rvManagement.SetLayoutManager(new LinearLayoutManager(container.Context, LinearLayoutManager.Vertical, false));
+            rvManagement.SetItemAnimator(null);
             rvManagementItems = new List<ManagementItem>();
             rvManagementAdapter = new ManagementAdapter(rvManagementItems, this);
             rvManagement.SetAdapter(rvManagementAdapter);
@@ -69,10 +70,7 @@ namespace SistemaRH.Fragments
             base.OnResume();
             if (!IsDataLoaded)
             {
-                GetCurrentUserRole().GetAwaiter().OnCompleted(() => 
-                {
-                    SetData();
-                });
+                SetData();
             }
         }
 
@@ -104,13 +102,6 @@ namespace SistemaRH.Fragments
                 tvManagementNotContent.Visibility = ViewStates.Gone;
                 rvManagement.Visibility = ViewStates.Visible;
             }
-        }
-
-        private async Task GetCurrentUserRole()
-        {
-            var user = await MyLib.Instance.FindObjectAsync<User>(MyLib.Instance.GetUserId());
-            if (user != null)
-                CurrentUserRole = user.Role;
         }
     }
 }

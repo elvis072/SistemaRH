@@ -22,12 +22,35 @@ namespace SistemaRH.Fragments
     {
         private TabLayout tlHome;
         private ViewPager vpHome;
+        private List<Fragment> fragments;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            // Create your fragment here
+            Bundle candidateManagementArgs = new Bundle();
+            candidateManagementArgs.PutString("fragment_title", MyLib.Instance.GetString(Resource.String.candidates));
+            CandidateManagement candidateManagement = new CandidateManagement
+            {
+                ManagementSwipeActions = ManagementSwipeActions.DeleteAndAdd,
+                ManagementItemOptions = ManagementItemOptions.OnlyCandidateOptions,
+                Arguments = candidateManagementArgs
+            };
+
+            Bundle workExperienceManagementArgs = new Bundle();
+            workExperienceManagementArgs.PutString("fragment_title", MyLib.Instance.GetString(Resource.String.workExperience));
+            WorkExperienceManagement workExperienceManagement = new WorkExperienceManagement
+            {
+                ManagementSwipeActions = ManagementSwipeActions.Delete,
+                ManagementItemOptions = ManagementItemOptions.OnlyCandidateOptions,
+                Arguments = workExperienceManagementArgs
+            };
+
+            fragments = new List<Fragment>()
+            {
+                candidateManagement,
+                workExperienceManagement
+            };
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -35,27 +58,8 @@ namespace SistemaRH.Fragments
             View view = inflater.Inflate(Resource.Layout.Home, container, false);
             tlHome = view.FindViewById<TabLayout>(Resource.Id.tlHome);
             vpHome = view.FindViewById<ViewPager>(Resource.Id.vpHome);
-
-            Bundle candidateManagementArgs = new Bundle();
-            candidateManagementArgs.PutString("fragment_title", MyLib.Instance.GetString(Resource.String.candidates));
-            CandidateManagement candidateManagement = new CandidateManagement();
-            candidateManagement.ManagementSwipeActions = ManagementSwipeActions.DeleteAndAdd;
-            candidateManagement.Arguments = candidateManagementArgs;
-
-            Bundle workExperienceManagementArgs = new Bundle();
-            workExperienceManagementArgs.PutString("fragment_title", MyLib.Instance.GetString(Resource.String.workExperience));
-            WorkExperienceManagement workExperienceManagement = new WorkExperienceManagement();
-            workExperienceManagement.ManagementSwipeActions = ManagementSwipeActions.Delete;
-            workExperienceManagement.Arguments = workExperienceManagementArgs;
-
-            List<Fragment> fragments = new List<Fragment>()
-            {
-                candidateManagement,
-                workExperienceManagement
-            };           
-
             vpHome.Adapter = new MyFragmentPagerAdapter(ChildFragmentManager, fragments);
-            tlHome.SetupWithViewPager(vpHome);       
+            tlHome.SetupWithViewPager(vpHome);
             return view;
         }
     }

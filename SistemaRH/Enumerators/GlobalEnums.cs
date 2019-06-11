@@ -51,5 +51,11 @@ namespace SistemaRH.Enumerators
             TrainingManagement = 2,
             JobsManagement = 3
         }
+
+        public enum ManagementItemOptions
+        {
+            All,
+            OnlyCandidateOptions
+        }
     }
 }

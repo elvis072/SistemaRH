@@ -49,14 +49,14 @@ namespace SistemaRH.Controls
                 var item = managementAdapter.Items[position];
                 managementAdapter.Items.Remove(item);
                 managementAdapter.NotifyItemRemoved(position);
-                managementAdapter.Parent.ManagementOperationsListener?.RemoveObject(item.Id).GetAwaiter();
+                managementAdapter.Fragment.ManagementOperationsListener?.RemoveItem(item).GetAwaiter();
             }
             else if (direction == ItemTouchHelper.Right && (managementSwipeActions == ManagementSwipeActions.Add || managementSwipeActions == ManagementSwipeActions.DeleteAndAdd))
             {
                 var item = managementAdapter.Items[position];
                 managementAdapter.Items.Remove(item);
                 managementAdapter.NotifyItemRemoved(position);
-                managementAdapter.Parent.ManagementOperationsListener?.AddObject(item.Id).GetAwaiter();
+                managementAdapter.Fragment.ManagementOperationsListener?.AddItem(item).GetAwaiter();
             }
         }
 

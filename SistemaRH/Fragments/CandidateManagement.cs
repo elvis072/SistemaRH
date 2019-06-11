@@ -57,12 +57,15 @@ namespace SistemaRH.Fragments
             base.OnPause();
         }
 
-        public async Task RemoveObject(long objId)
+        public async Task RemoveItem(ManagementItem item)
         {
-            var candidate = candidates.Where(x => x.Id == objId).FirstOrDefault();
+            if (item == null)
+                return;
+
+            var candidate = candidates.Where(x => x.Id == item.Id).FirstOrDefault();
             if (candidate != null)
             {
-                await MyLib.Instance.DeleteObjectAsync<Candidate>(objId);
+                await MyLib.Instance.DeleteObjectAsync<Candidate>(item.Id);
                 await MyLib.Instance.DeleteObjectAsync<User>(candidate.User.Id);               
             }
             else
@@ -72,9 +75,12 @@ namespace SistemaRH.Fragments
                 });
         }
 
-        public async Task AddObject(long objId)
+        public async Task AddItem(ManagementItem item)
         {
-            var candidate = candidates.Where(x => x.Id == objId).FirstOrDefault();
+            if (item == null)
+                return;
+
+            var candidate = candidates.Where(x => x.Id == item.Id).FirstOrDefault();
             if (candidate != null)
             {
                 candidate.User.Role = Enumerators.GlobalEnums.UsersRoles.Employee;
@@ -91,26 +97,26 @@ namespace SistemaRH.Fragments
                     State = true
                 };
                 await MyLib.Instance.InsertObjectAsync(newEmployee);
-                await MyLib.Instance.DeleteObjectAsync<Candidate>(objId);
+                await MyLib.Instance.DeleteObjectAsync<Candidate>(item.Id);
 
                 Activity?.RunOnUiThread(() =>
                 {
                     Toast.MakeText(Activity, Resource.String.candidateAccepted, ToastLength.Short).Show();
-                });             
-            } 
+                });
+            }
             else
                 Activity?.RunOnUiThread(() =>
                 {
                     Toast.MakeText(Activity, Resource.String.errorMessage, ToastLength.Short).Show();
-                });
+                });            
         }
 
-        public Task EditObject(long objId)
+        public Task EditItem(ManagementItem item)
         {
             throw new NotImplementedException();
         }
 
-        public Task ChangeObjectState(long objId)
+        public Task ChangeItemState(ManagementItem item)
         {
             return null;
         }

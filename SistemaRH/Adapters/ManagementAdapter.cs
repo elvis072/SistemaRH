@@ -14,12 +14,12 @@ namespace SistemaRH.Adapters
     public class ManagementAdapter : RecyclerView.Adapter
     {
         public List<ManagementItem> Items;
-        public ManagementFragment Parent;
+        public ManagementFragment Fragment;
 
-        public ManagementAdapter(List<ManagementItem> items, ManagementFragment parent)
+        public ManagementAdapter(List<ManagementItem> items, ManagementFragment fragment)
         { 
             Items = items;
-            Parent = parent;
+            Fragment = fragment;
         }
 
         public override int ItemCount
@@ -34,7 +34,7 @@ namespace SistemaRH.Adapters
         {
             int id = Resource.Layout.ManagementItem;
             var itemView = LayoutInflater.FromContext(parent.Context).Inflate(id, parent, false);
-            return new ManagementAdapterViewHolder(itemView, Parent);
+            return new ManagementAdapterViewHolder(itemView, this);
         }
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder viewHolder, int position)
@@ -53,29 +53,29 @@ namespace SistemaRH.Adapters
                 else
                     holder.ItemView.Alpha = 1.0f;
 
-                if (Parent.CurrentUserRole == UsersRoles.Employee)
+                if (Fragment.ManagementItemOptions == ManagementItemOptions.All)
                     holder.SwManagementItem.Visibility = ViewStates.Visible;
                 else
                     holder.SwManagementItem.Visibility = ViewStates.Gone;
             }
         }
 
-        private class ManagementAdapterViewHolder : RecyclerView.ViewHolder, CompoundButton.IOnCheckedChangeListener
+        private class ManagementAdapterViewHolder : RecyclerView.ViewHolder, View.IOnClickListener
         {
             public TextView TvManagementItemTitle { get; set; }
             public TextView TvManagementItemDescription { get; set; }
             public Switch SwManagementItem { get; set; }
 
-            private ManagementFragment parent;
+            private ManagementAdapter adapter;
             private ManagementItem item;
 
-            public ManagementAdapterViewHolder(View itemView, ManagementFragment parent) : base(itemView)
+            public ManagementAdapterViewHolder(View itemView, ManagementAdapter adapter) : base(itemView)
             {
-                this.parent = parent;
+                this.adapter = adapter;
                 TvManagementItemTitle = itemView.FindViewById<TextView>(Resource.Id.tvManagementItemTitle);
                 TvManagementItemDescription = itemView.FindViewById<TextView>(Resource.Id.tvManagementItemDescription);
                 SwManagementItem = itemView.FindViewById<Switch>(Resource.Id.swManagementItem);
-                SwManagementItem.SetOnCheckedChangeListener(this);
+                SwManagementItem.SetOnClickListener(this);
             }
 
             public void SetItem(ManagementItem item)
@@ -83,10 +83,16 @@ namespace SistemaRH.Adapters
                 this.item = item;
             }
 
-            public void OnCheckedChanged(CompoundButton buttonView, bool isChecked)
-            {                
-                item.State = isChecked;
-                parent.ManagementOperationsListener?.ChangeObjectState(item.Id)?.GetAwaiter();
+            public void OnClick(View v)
+            {
+                switch(v.Id)
+                {
+                    case Resource.Id.swManagementItem:
+                        item.State = SwManagementItem.Checked;
+                        adapter.NotifyItemChanged(AdapterPosition);
+                        adapter.Fragment.ManagementOperationsListener?.ChangeItemState(item)?.GetAwaiter();
+                        break;
+                }
             }
         }
     }
