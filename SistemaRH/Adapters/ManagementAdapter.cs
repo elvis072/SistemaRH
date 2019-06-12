@@ -75,6 +75,7 @@ namespace SistemaRH.Adapters
                 TvManagementItemTitle = itemView.FindViewById<TextView>(Resource.Id.tvManagementItemTitle);
                 TvManagementItemDescription = itemView.FindViewById<TextView>(Resource.Id.tvManagementItemDescription);
                 SwManagementItem = itemView.FindViewById<Switch>(Resource.Id.swManagementItem);
+                ItemView.SetOnClickListener(this);
                 SwManagementItem.SetOnClickListener(this);
             }
 
@@ -85,13 +86,16 @@ namespace SistemaRH.Adapters
 
             public void OnClick(View v)
             {
+                if (v == ItemView)
+                    adapter.Fragment.ManagementOperationsListener?.EditItem(item);
+
                 switch(v.Id)
                 {
                     case Resource.Id.swManagementItem:
                         item.State = SwManagementItem.Checked;
                         adapter.NotifyItemChanged(AdapterPosition);
                         adapter.Fragment.ManagementOperationsListener?.ChangeItemState(item)?.GetAwaiter();
-                        break;
+                        break;           
                 }
             }
         }

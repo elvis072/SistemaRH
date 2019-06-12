@@ -26,7 +26,7 @@ namespace SistemaRH.Controls
         private readonly ColorDrawable deleteBackground, acceptBackground;
         private ManagementSwipeActions managementSwipeActions;
 
-        public ManagementSwipeToDeleteCallback(ManagementAdapter managementAdapter, ManagementSwipeActions managementSwipeActions) : base(0, ItemTouchHelper.Left | ItemTouchHelper.Right)
+        public ManagementSwipeToDeleteCallback(ManagementAdapter managementAdapter, ManagementSwipeActions managementSwipeActions) : base(0, ItemTouchHelper.Start | ItemTouchHelper.End)
         {
             this.managementAdapter = managementAdapter;
             this.managementSwipeActions = managementSwipeActions;

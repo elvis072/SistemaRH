@@ -14,6 +14,8 @@ using SistemaRH.Adapters;
 using SistemaRH.Objects;
 using SistemaRH.Utilities;
 using static SistemaRH.Enumerators.GlobalEnums;
+using SistemaRH.Popups;
+using Newtonsoft.Json;
 
 namespace SistemaRH.Fragments
 {
@@ -40,6 +42,7 @@ namespace SistemaRH.Fragments
 
         public async Task<List<ManagementItem>> GetData()
         {
+            var riskLevel = Application.Context.Resources.GetStringArray(Resource.Array.riskLevels);
             List<ManagementItem> items = new List<ManagementItem>();
             jobs = await MyLib.Instance.FindAllObjectsAsync<Job>();
             if (jobs != null && jobs.Count > 0)
@@ -51,7 +54,7 @@ namespace SistemaRH.Fragments
                         {
                             Id = j.Id,
                             Title = j.Name,
-                            Description = $"{MyLib.Instance.GetString(Resource.String.riskLevel)}: {Enum.GetName(typeof(RiskLevel), j.RiskLevel)}\n" +
+                            Description = $"{MyLib.Instance.GetString(Resource.String.riskLevel)}: {riskLevel[(int)j.RiskLevel]}\n" +
                                           $"{MyLib.Instance.GetString(Resource.String.minSalary)}: {j.MinSalary}\n" +
                                           $"{MyLib.Instance.GetString(Resource.String.maxSalary)}: {j.MaxSalary}",
                             State = j.State
@@ -71,7 +74,12 @@ namespace SistemaRH.Fragments
 
         public Task EditItem(ManagementItem item)
         {
-            throw new NotImplementedException();
+            if (item == null)
+                return null;
+
+            Job job = jobs.Where(x => x.Id == item.Id).FirstOrDefault();
+            ShowPopupJob(job);
+            return null;    
         }
 
         public async Task ChangeItemState(ManagementItem item)
@@ -85,6 +93,22 @@ namespace SistemaRH.Fragments
                 job.State = item.State;
                 await MyLib.Instance.UpdateObjectAsync(job);
             }
+        }
+
+        private void ShowPopupJob(Job job)
+        {
+            if (job == null)
+                return;
+
+            var ft = ChildFragmentManager.BeginTransaction();
+            PopupJob popupJob = new PopupJob();
+            Bundle args = new Bundle();
+            args.PutString("job", JsonConvert.SerializeObject(job));
+            args.PutInt("popupAction", (int)ManagementPopupAction.Edit);
+            popupJob.Arguments = args;                       
+
+            ft.Add(popupJob, nameof(PopupJob));
+            ft.Commit();     
         }
     }
 }

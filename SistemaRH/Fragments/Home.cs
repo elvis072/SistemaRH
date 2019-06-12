@@ -15,6 +15,7 @@ using Android.Support.Design.Widget;
 using SistemaRH.Adapters;
 using SistemaRH.Utilities;
 using static SistemaRH.Enumerators.GlobalEnums;
+using SistemaRH.Objects;
 
 namespace SistemaRH.Fragments
 {
@@ -22,17 +23,26 @@ namespace SistemaRH.Fragments
     {
         private TabLayout tlHome;
         private ViewPager vpHome;
-        private List<Fragment> fragments;
 
-        public override void OnCreate(Bundle savedInstanceState)
+        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
+            View view = inflater.Inflate(Resource.Layout.Home, container, false);
+            tlHome = view.FindViewById<TabLayout>(Resource.Id.tlHome);
+            vpHome = view.FindViewById<ViewPager>(Resource.Id.vpHome);  
+            SetData();
+            return view;
+        }
+
+        private async void SetData()
+        {
+            User user = await MyLib.Instance.FindObjectAsync<User>(MyLib.Instance.GetUserId());
+            bool isEmployee = user.Role == UsersRoles.Employee;
 
             Bundle candidateManagementArgs = new Bundle();
             candidateManagementArgs.PutString("fragment_title", MyLib.Instance.GetString(Resource.String.candidates));
             CandidateManagement candidateManagement = new CandidateManagement
             {
-                ManagementSwipeActions = ManagementSwipeActions.DeleteAndAdd,
+                ManagementSwipeActions = isEmployee ? ManagementSwipeActions.DeleteAndAdd : ManagementSwipeActions.None,
                 ManagementItemOptions = ManagementItemOptions.OnlyCandidateOptions,
                 Arguments = candidateManagementArgs
             };
@@ -41,26 +51,19 @@ namespace SistemaRH.Fragments
             workExperienceManagementArgs.PutString("fragment_title", MyLib.Instance.GetString(Resource.String.workExperience));
             WorkExperienceManagement workExperienceManagement = new WorkExperienceManagement
             {
-                ManagementSwipeActions = ManagementSwipeActions.Delete,
+                ManagementSwipeActions = isEmployee ? ManagementSwipeActions.Delete : ManagementSwipeActions.None,
                 ManagementItemOptions = ManagementItemOptions.OnlyCandidateOptions,
                 Arguments = workExperienceManagementArgs
             };
 
-            fragments = new List<Fragment>()
+            var fragments = new List<Fragment>()
             {
                 candidateManagement,
                 workExperienceManagement
             };
-        }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            View view = inflater.Inflate(Resource.Layout.Home, container, false);
-            tlHome = view.FindViewById<TabLayout>(Resource.Id.tlHome);
-            vpHome = view.FindViewById<ViewPager>(Resource.Id.vpHome);
             vpHome.Adapter = new MyFragmentPagerAdapter(ChildFragmentManager, fragments);
             tlHome.SetupWithViewPager(vpHome);
-            return view;
         }
     }
 }

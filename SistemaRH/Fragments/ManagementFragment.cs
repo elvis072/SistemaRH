@@ -83,6 +83,7 @@ namespace SistemaRH.Fragments
             if (data != null && data.Count > 0)
             {
                 SetNotContentVisibility(false);
+                rvManagementItems.Clear();
                 rvManagementItems.AddRange(data);
                 rvManagementAdapter.NotifyItemRangeInserted(0, data.Count);
             }

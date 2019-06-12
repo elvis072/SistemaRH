@@ -173,6 +173,7 @@
     <Compile Include="Objects\Training.cs" />
     <Compile Include="Objects\User.cs" />
     <Compile Include="Objects\WorkExperience.cs" />
+    <Compile Include="Popups\PopupJob.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\MyLib.cs" />
@@ -210,7 +211,6 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Popups\" />
     <Folder Include="Resources\mipmap-hdpi\" />
     <Folder Include="Resources\mipmap-mdpi\" />
     <Folder Include="Resources\mipmap-xhdpi\" />

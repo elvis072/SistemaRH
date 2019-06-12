@@ -20,7 +20,7 @@ namespace SistemaRH.Enumerators
             Candidate
         }
 
-        public enum RiskLevel
+        public enum RiskLevel : int
         {
             Low,
             Medium,
@@ -46,16 +46,23 @@ namespace SistemaRH.Enumerators
 
         public enum EmployeeOptions : int
         {
-            CompetenctiesManagement = 0,
-            LanguagesManagement = 1,
-            TrainingManagement = 2,
-            JobsManagement = 3
+            CompetenctiesManagement,
+            LanguagesManagement,
+            TrainingManagement,
+            JobsManagement
         }
 
         public enum ManagementItemOptions
         {
             All,
             OnlyCandidateOptions
+        }
+
+        public enum ManagementPopupAction : int
+        {
+            Show,
+            Create,
+            Edit
         }
     }
 }
