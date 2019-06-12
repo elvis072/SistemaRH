@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Util;
-using Android.Views;
-using Android.Widget;
 using SistemaRH.Adapters;
 using SistemaRH.Objects;
 using SistemaRH.Utilities;
@@ -37,12 +30,12 @@ namespace SistemaRH.Fragments
 
         public Task AddItem(ManagementItem item)
         {
-            return null;
+            return Task.Run(() => { ShowPopupJob(item, ManagementPopupAction.Create); });
         }
 
         public async Task<List<ManagementItem>> GetData()
         {
-            var riskLevel = Application.Context.Resources.GetStringArray(Resource.Array.riskLevels);
+            var riskLevels = Application.Context.Resources.GetStringArray(Resource.Array.riskLevels);
             List<ManagementItem> items = new List<ManagementItem>();
             jobs = await MyLib.Instance.FindAllObjectsAsync<Job>();
             if (jobs != null && jobs.Count > 0)
@@ -54,7 +47,7 @@ namespace SistemaRH.Fragments
                         {
                             Id = j.Id,
                             Title = j.Name,
-                            Description = $"{MyLib.Instance.GetString(Resource.String.riskLevel)}: {riskLevel[(int)j.RiskLevel]}\n" +
+                            Description = $"{MyLib.Instance.GetString(Resource.String.riskLevel)}: {riskLevels[(int)j.RiskLevel]}\n" +
                                           $"{MyLib.Instance.GetString(Resource.String.minSalary)}: {j.MinSalary}\n" +
                                           $"{MyLib.Instance.GetString(Resource.String.maxSalary)}: {j.MaxSalary}",
                             State = j.State
@@ -77,9 +70,7 @@ namespace SistemaRH.Fragments
             if (item == null)
                 return null;
 
-            Job job = jobs.Where(x => x.Id == item.Id).FirstOrDefault();
-            ShowPopupJob(job);
-            return null;    
+            return Task.Run(() => { ShowPopupJob(item, ManagementPopupAction.Edit); });
         }
 
         public async Task ChangeItemState(ManagementItem item)
@@ -95,20 +86,21 @@ namespace SistemaRH.Fragments
             }
         }
 
-        private void ShowPopupJob(Job job)
+        private void ShowPopupJob(ManagementItem item, ManagementPopupAction popupAction)
         {
-            if (job == null)
-                return;
+            var job = item != null ? jobs.Where(x => x.Id == item.Id).FirstOrDefault() : null;
+            if (job != null || (job == null && popupAction == ManagementPopupAction.Create))
+            {
+                var ft = ChildFragmentManager.BeginTransaction();
+                PopupJob popupJob = new PopupJob();
+                Bundle args = new Bundle();
+                args.PutString("job", job != null ? JsonConvert.SerializeObject(job) : null);
+                args.PutInt("popupAction", (int)popupAction);
+                popupJob.Arguments = args;
 
-            var ft = ChildFragmentManager.BeginTransaction();
-            PopupJob popupJob = new PopupJob();
-            Bundle args = new Bundle();
-            args.PutString("job", JsonConvert.SerializeObject(job));
-            args.PutInt("popupAction", (int)ManagementPopupAction.Edit);
-            popupJob.Arguments = args;                       
-
-            ft.Add(popupJob, nameof(PopupJob));
-            ft.Commit();     
+                ft.Add(popupJob, nameof(PopupJob));
+                ft.Commit();
+            }
         }
     }
 }

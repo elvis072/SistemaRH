@@ -18,5 +18,6 @@ namespace SistemaRH.Objects
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public string Institution { get; set; }
+        public bool State { get; set; }
     }
 }

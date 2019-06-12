@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Util;
-using Android.Views;
-using Android.Widget;
+using Newtonsoft.Json;
 using SistemaRH.Adapters;
 using SistemaRH.Objects;
+using SistemaRH.Popups;
 using SistemaRH.Utilities;
+using static SistemaRH.Enumerators.GlobalEnums;
 
 namespace SistemaRH.Fragments
 {
@@ -34,7 +29,7 @@ namespace SistemaRH.Fragments
 
         public Task AddItem(ManagementItem item)
         {
-            throw new NotImplementedException();
+            return Task.Run(() => { ShowPopupCompetition(item, ManagementPopupAction.Create); });
         }
 
         public async Task<List<ManagementItem>> GetData()
@@ -67,7 +62,10 @@ namespace SistemaRH.Fragments
 
         public Task EditItem(ManagementItem item)
         {
-            throw new NotImplementedException();
+            if (item == null)
+                return null;
+
+            return Task.Run(() => { ShowPopupCompetition(item, ManagementPopupAction.Edit); });
         }
 
         public async Task ChangeItemState(ManagementItem item)
@@ -80,6 +78,23 @@ namespace SistemaRH.Fragments
             {
                 competition.State = item.State;
                 await MyLib.Instance.UpdateObjectAsync(competition);
+            }
+        }
+
+        private void ShowPopupCompetition(ManagementItem item, ManagementPopupAction popupAction)
+        {
+            var competition = item != null ? competitions.Where(x => x.Id == item.Id).FirstOrDefault() : null;
+            if (competition != null || (competition == null && popupAction == ManagementPopupAction.Create))
+            {
+                var ft = ChildFragmentManager.BeginTransaction();
+                PopupCompetition popupJob = new PopupCompetition();
+                Bundle args = new Bundle();
+                args.PutString("competition", competition != null ? JsonConvert.SerializeObject(competition) : null);
+                args.PutInt("popupAction", (int)popupAction);
+                popupJob.Arguments = args;
+
+                ft.Add(popupJob, nameof(PopupCompetition));
+                ft.Commit();
             }
         }
     }

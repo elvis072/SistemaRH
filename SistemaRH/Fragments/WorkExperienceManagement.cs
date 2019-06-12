@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.Support.V4.App;
-using Android.Content;
+﻿using System.Collections.Generic;
 using Android.OS;
-using Android.Runtime;
-using Android.Util;
-using Android.Views;
-using Android.Widget;
-using Android.Support.V7.Widget;
 using SistemaRH.Adapters;
 using SistemaRH.Utilities;
 using SistemaRH.Objects;
@@ -32,7 +21,7 @@ namespace SistemaRH.Fragments
             if (workExperience != null && workExperience.Count > 0)
             {
                 foreach (var we in workExperience)
-                {
+                {                   
                     if (we != null)
                         items.Add(new ManagementItem()
                         {
@@ -69,12 +58,12 @@ namespace SistemaRH.Fragments
 
         public Task AddItem(ManagementItem item)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public Task EditItem(ManagementItem item)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public Task ChangeItemState(ManagementItem item)

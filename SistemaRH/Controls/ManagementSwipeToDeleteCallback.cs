@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.Graphics;
 using Android.Graphics.Drawables;
-using Android.OS;
-using Android.Runtime;
 using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
 using Android.Support.V7.Widget.Helper;
 using Android.Views;
-using Android.Widget;
 using SistemaRH.Adapters;
 using static SistemaRH.Enumerators.GlobalEnums;
 
@@ -24,14 +15,14 @@ namespace SistemaRH.Controls
         private ManagementAdapter managementAdapter;
         private Drawable deleteIcon, acceptIcon;
         private readonly ColorDrawable deleteBackground, acceptBackground;
-        private ManagementSwipeActions managementSwipeActions;
+        private readonly ManagementSwipeActions managementSwipeActions;
 
         public ManagementSwipeToDeleteCallback(ManagementAdapter managementAdapter, ManagementSwipeActions managementSwipeActions) : base(0, ItemTouchHelper.Start | ItemTouchHelper.End)
         {
             this.managementAdapter = managementAdapter;
             this.managementSwipeActions = managementSwipeActions;
-            deleteIcon = ContextCompat.GetDrawable(Application.Context, Android.Resource.Drawable.IcMenuDelete);
-            acceptIcon = ContextCompat.GetDrawable(Application.Context, Android.Resource.Drawable.IcMenuSave);
+            deleteIcon = ContextCompat.GetDrawable(Application.Context, Resource.Drawable.ic_delete);
+            acceptIcon = ContextCompat.GetDrawable(Application.Context, Resource.Drawable.ic_add_circle);
             deleteBackground = new ColorDrawable(Color.Red);
             acceptBackground = new ColorDrawable(new Color(ContextCompat.GetColor(Application.Context, Resource.Color.colorPrimary)));
         }
@@ -44,14 +35,14 @@ namespace SistemaRH.Controls
         public override void OnSwiped(RecyclerView.ViewHolder viewHolder, int direction)
         {
             int position = viewHolder.AdapterPosition;
-            if (direction == ItemTouchHelper.Left && (managementSwipeActions == ManagementSwipeActions.Delete || managementSwipeActions == ManagementSwipeActions.DeleteAndAdd))
+            if (direction == ItemTouchHelper.Start && (managementSwipeActions == ManagementSwipeActions.Delete || managementSwipeActions == ManagementSwipeActions.DeleteAndAdd))
             {
                 var item = managementAdapter.Items[position];
                 managementAdapter.Items.Remove(item);
                 managementAdapter.NotifyItemRemoved(position);
                 managementAdapter.Fragment.ManagementOperationsListener?.RemoveItem(item).GetAwaiter();
             }
-            else if (direction == ItemTouchHelper.Right && (managementSwipeActions == ManagementSwipeActions.Add || managementSwipeActions == ManagementSwipeActions.DeleteAndAdd))
+            else if (direction == ItemTouchHelper.End && (managementSwipeActions == ManagementSwipeActions.Add || managementSwipeActions == ManagementSwipeActions.DeleteAndAdd))
             {
                 var item = managementAdapter.Items[position];
                 managementAdapter.Items.Remove(item);
@@ -79,6 +70,7 @@ namespace SistemaRH.Controls
                         itemView.Left + ((int)dX) + backgroundCornerOffset,
                         itemView.Bottom);
                 acceptBackground.Draw(c);
+                acceptIcon.Draw(c);
             }
             else if (dX < 0 && (managementSwipeActions == ManagementSwipeActions.Delete || managementSwipeActions == ManagementSwipeActions.DeleteAndAdd))
             { // Swiping to the left
@@ -90,6 +82,7 @@ namespace SistemaRH.Controls
                 deleteBackground.SetBounds(itemView.Right + ((int)dX) - backgroundCornerOffset,
                         itemView.Top, itemView.Right, itemView.Bottom);
                 deleteBackground.Draw(c);
+                deleteIcon.Draw(c);
             }
             else
             { // view is unSwiped

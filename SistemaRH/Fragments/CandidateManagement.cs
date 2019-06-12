@@ -32,14 +32,46 @@ namespace SistemaRH.Fragments
                 foreach (var c in candidates)
                 {
                     if (c != null)
+                    {
+                        string competitions = string.Empty;
+                        for (int i = 0; i < c.Competitions.Count; i++)
+                        {
+                            var comp = c.Competitions[i];
+                            if (comp == null)
+                                continue;
+
+                            if (i < c.Competitions.Count - 1)
+                                competitions += (comp.Description + ", ");
+                            else
+                                competitions += comp.Description;
+                        }
+
+                        string trainings = string.Empty;
+                        for (int i = 0; i < c.Trainings.Count; i++)
+                        {
+                            var training = c.Trainings[i];
+                            if (training == null)
+                                continue;
+
+                            string tempTrain = $"{MyLib.Instance.ConvertToDate(training.FromDate, training.ToDate)} {training.Description}";
+                            if (i < c.Trainings.Count - 1)
+                                trainings += (tempTrain + ", ");
+                            else
+                                trainings += tempTrain;
+                        }                        
+
                         items.Add(new ManagementItem()
                         {
                             Id = c.Id,
-                            Title = $"{c?.Name}",
-                            Description = $"{MyLib.Instance.GetString(Resource.String.job)}: {c?.ExpectedJob?.Name}\n" +
-                                          $"{MyLib.Instance.GetString(Resource.String.expectedSalary)}: {c?.ExpectedSalary}\n" +
-                                          $"{MyLib.Instance.GetString(Resource.String.department)}: {c?.Department?.Description}"
+                            Title = $"{c.Name}",
+                            Description = $"{MyLib.Instance.GetString(Resource.String.job)}: {c.ExpectedJob?.Name}\n" +
+                                          $"{MyLib.Instance.GetString(Resource.String.expectedSalary)}: {c.ExpectedSalary}\n" +
+                                          $"{MyLib.Instance.GetString(Resource.String.department)}: {c.Department?.Description}\n" +
+                                          $"{MyLib.Instance.GetString(Resource.String.competitions)}: {competitions}\n" +
+                                          $"{MyLib.Instance.GetString(Resource.String.trainings)}: {trainings}\n" +
+                                          (!string.IsNullOrEmpty(c.RecommendatedBy) ? $"{MyLib.Instance.GetString(Resource.String.recommendatedBy)}: {c.RecommendatedBy}\n" : string.Empty)
                         });
+                    }
                 }
             }
             return items;
@@ -113,7 +145,7 @@ namespace SistemaRH.Fragments
 
         public Task EditItem(ManagementItem item)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public Task ChangeItemState(ManagementItem item)

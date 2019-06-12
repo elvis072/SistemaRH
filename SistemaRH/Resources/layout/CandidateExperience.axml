@@ -91,7 +91,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"      
       android:layout_marginTop="10dp"
-      android:hint="@string/recommendatedFor"
+      android:hint="@string/recommendatedBy"
       android:theme="@style/MyTextInputLayoutStyle">
       <android.support.design.widget.TextInputEditText
         android:id="@+id/tietCandidateExperienceRecommendations"

@@ -17,9 +17,11 @@
   <string name="next">Siguiente</string>
   <string name="none">Ninguno...</string>
   <string name="competitions">Competencias</string>
+  <string name="competition">Competencia</string>
   <string name="trainings">Capacitaciones</string>
+  <string name="training">Capacitación</string>
   <string name="workExperience">Experiencia de trabajo</string>
-  <string name="recommendatedFor">Recommendado por</string>
+  <string name="recommendatedBy">Recommendado por</string>
   <string name="salary">Salario</string>
   <string name="enterprise">Empresa</string>
   <string name="fromDate">Desde la fecha</string>
@@ -38,6 +40,11 @@
   <string name="save">Guardar</string>
   <string name="jobCreated">El puesto se ha creado correctamente</string>
   <string name="jobUpdated">El puesto se ha actualizado correctamente</string>
+  <string name="competitionCreated">La competencia se ha creado correctamente</string>
+  <string name="competitionUpdated">La competencia se ha actualizado correctamente</string>
+  <string name="description">Descripción</string>
+  <string name="trainingCreated">La capacitación se ha creado correctamente</string>
+  <string name="trainingUpdated">La capacitación se ha actualizado correctamente</string>
   
   <!--Errors-->
   <string name="usernameCannotBeEmpty">El nombre de usuario no puede estar vacío</string>
@@ -70,5 +77,13 @@
     <item>Bajo</item>
     <item>Medio</item>
     <item>Alto</item>
+  </string-array>
+
+  <string-array name="trainingLevels">
+    <item>Grado</item>
+    <item>Postgrado</item>
+    <item>Maestría</item>
+    <item>Doctorado</item>
+    <item>Técnico</item>
   </string-array>
 </resources>

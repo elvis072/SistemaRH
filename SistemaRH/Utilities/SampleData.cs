@@ -30,7 +30,38 @@ namespace SistemaRH.Utilities
                 await CreateDepartments();
                 await CreateCompetitions();
                 await CreateTrainings();
+                await CreateAdminUser();
             }    
+        }
+
+        public async Task CreateAdminUser()
+        {
+            User user = new User()
+            {
+                Username = "elvis07",
+                Password = MyLib.Instance.EncryptText("12345678"),
+                Role = UsersRoles.Employee
+            };
+            await MyLib.Instance.CreateTables(new Type[] { typeof(Candidate), typeof(Employee) });
+            await MyLib.Instance.InsertObjectAsync(user);
+
+            MyLib.Instance.SaveUserId(user.Id);
+
+            var departement = await MyLib.Instance.FindObjectAsync<Department>(1);
+            var job = await MyLib.Instance.FindObjectAsync<Job>(1);
+
+            Employee employee = new Employee()
+            {
+                Name = "Elvis Antigua",
+                IdentificationCard = 12345678910,
+                Department = departement,
+                Job = job,
+                MensualSalary = 30000,
+                EntryDate = DateTime.Now,
+                User = user,
+                State = true
+            };
+            await MyLib.Instance.InsertObjectAsync(employee);
         }
 
         public async Task CreateJobs()
@@ -189,35 +220,40 @@ namespace SistemaRH.Utilities
                     FromDate = new DateTime(1,1,1),
                     ToDate = new DateTime(4,1,1),
                     TrainingLevel = TrainingLevel.Postgraduate,
-                    Institution = "UNIBE"
+                    Institution = "UNIBE",
+                    State = false
                 },
                 new Training()
                 {
                     Description = "Conocimientos de PHP",
                     FromDate = new DateTime(1,1,1),
                     ToDate = new DateTime(4,1,1),
-                    TrainingLevel = TrainingLevel.Technical
+                    TrainingLevel = TrainingLevel.Technical,
+                    State = true
                 },
                 new Training()
                 {
                     Description = "Conocimientos de Java",
                     FromDate = new DateTime(1,1,1),
                     ToDate = new DateTime(6,1,1),
-                    TrainingLevel = TrainingLevel.Grade
+                    TrainingLevel = TrainingLevel.Grade,
+                    State = true
                 },                
                 new Training()
                 {
                     Description = "Experiencia con HTML5 y CSS3",
                     FromDate = new DateTime(1,1,1),
                     ToDate = new DateTime(3,1,1),
-                    TrainingLevel = TrainingLevel.Technical
+                    TrainingLevel = TrainingLevel.Technical,
+                    State = true
                 },
                 new Training()
                 {
                     Description = "Experiencia con bases de datos relacionales (Postgres, MySQL, etc)",
                     FromDate = new DateTime(1,1,1),
                     ToDate = new DateTime(4,1,1),
-                    TrainingLevel = TrainingLevel.Grade
+                    TrainingLevel = TrainingLevel.Grade,
+                    State = true
                 }
             };
             await MyLib.Instance.InsertObjectsAsync(trainings);

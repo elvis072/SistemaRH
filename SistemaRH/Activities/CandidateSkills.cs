@@ -78,10 +78,11 @@ namespace SistemaRH.Activities
             {
                 foreach (var training in trainings)
                 {
-                    multiCheckBoxItemsTrainings.Add(new MultiCheckBoxItem() {
-                        Description = $"{MyLib.Instance.ConvertToDate(training.FromDate, training.ToDate)} " +
-                        $"{training.Description} " +
-                        $"{(string.IsNullOrEmpty(training.Institution) ? string.Empty : training.Institution)}" });
+                    if (training?.State ?? false)
+                        multiCheckBoxItemsTrainings.Add(new MultiCheckBoxItem() {
+                            Description = $"{MyLib.Instance.ConvertToDate(training.FromDate, training.ToDate)} " +
+                            $"{training.Description} " +
+                            $"{(string.IsNullOrEmpty(training.Institution) ? string.Empty : training.Institution)}" });
                 }
                 multiCheckBoxAdapterTrainings.NotifyItemRangeInserted(0, multiCheckBoxItemsTrainings.Count);
                 rvCandidateSkillsTrainings.Animate().ScaleY(1.0f).SetDuration(100);

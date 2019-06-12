@@ -18,6 +18,7 @@ using Android.Support.V7.Widget.Helper;
 using SistemaRH.Controls;
 using static SistemaRH.Enumerators.GlobalEnums;
 using SistemaRH.Objects;
+using Android.Support.Design.Widget;
 
 namespace SistemaRH.Fragments
 {
@@ -30,10 +31,11 @@ namespace SistemaRH.Fragments
         Task ChangeItemState(ManagementItem item);
     }
 
-    public class ManagementFragment : Fragment
+    public class ManagementFragment : Fragment, View.IOnClickListener
     {
         private TextView tvManagementNotContent;
         private RecyclerView rvManagement;
+        private FloatingActionButton fabManagementAddItem;
         private ManagementAdapter rvManagementAdapter;
         private List<ManagementItem> rvManagementItems;
         private bool IsDataLoaded = false;
@@ -49,6 +51,10 @@ namespace SistemaRH.Fragments
             View view = inflater.Inflate(Resource.Layout.Management, container, false);
             tvManagementNotContent = view.FindViewById<TextView>(Resource.Id.tvManagementNotContent);
             rvManagement = view.FindViewById<RecyclerView>(Resource.Id.rvManagement);
+            fabManagementAddItem = view.FindViewById<FloatingActionButton>(Resource.Id.fabManagementAddItem);
+
+            fabManagementAddItem.SetOnClickListener(this);
+
             rvManagement.SetItemViewCacheSize(40);
             rvManagement.SetLayoutManager(new LinearLayoutManager(container.Context, LinearLayoutManager.Vertical, false));
             rvManagement.SetItemAnimator(null);
@@ -61,6 +67,9 @@ namespace SistemaRH.Fragments
                 ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ManagementSwipeToDeleteCallback(rvManagementAdapter, ManagementSwipeActions));
                 itemTouchHelper.AttachToRecyclerView(rvManagement);
             }
+
+            if (ManagementItemOptions != ManagementItemOptions.All)
+                fabManagementAddItem.Visibility = ViewStates.Gone;
       
             return view;
         }
@@ -102,6 +111,16 @@ namespace SistemaRH.Fragments
             {
                 tvManagementNotContent.Visibility = ViewStates.Gone;
                 rvManagement.Visibility = ViewStates.Visible;
+            }
+        }
+
+        public void OnClick(View v)
+        {
+            switch(v.Id)
+            {
+                case Resource.Id.fabManagementAddItem:
+                    ManagementOperationsListener?.AddItem(null)?.GetAwaiter();
+                    break;
             }
         }
     }

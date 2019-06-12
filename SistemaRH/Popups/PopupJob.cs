@@ -44,8 +44,7 @@ namespace SistemaRH.Popups
                 string data = Arguments.GetString("job");
                 if (!string.IsNullOrEmpty(data))
                     job = JsonConvert.DeserializeObject<Job>(data);        
-            }
-                     
+            }                     
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -66,7 +65,7 @@ namespace SistemaRH.Popups
             MyLib.Instance.AddAfterTextChangeToTextInputLayout(tilPopupJobMinSalary);
             MyLib.Instance.AddAfterTextChangeToTextInputLayout(tilPopupJobMaxSalary);
 
-            var riskLevelItems = Android.App.Application.Context.Resources.GetStringArray(Resource.Array.riskLevels);
+            var riskLevelItems = Android.App.Application.Context.Resources.GetStringArray(Resource.Array.riskLevels).ToList();
             var risklevelAdapter = new ArrayAdapter<string>(Activity, Android.Resource.Layout.SimpleSpinnerItem, riskLevelItems);
             risklevelAdapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
             spPopupJobRiskLevel.Adapter = risklevelAdapter;
@@ -94,6 +93,10 @@ namespace SistemaRH.Popups
                         tietPopupJobMinSalary.Text = job.MinSalary.ToString();
                         tietPopupJobMaxSalary.Text = job.MaxSalary.ToString();
                     }
+                    break;
+                case ManagementPopupAction.Create:
+                    riskLevelItems.Insert(0, MyLib.Instance.GetString(Resource.String.none));
+                    risklevelAdapter.NotifyDataSetChanged();
                     break;
             }
 
